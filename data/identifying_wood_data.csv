@@ -1,0 +1,218 @@
+scientific_name,common_name,wood_type
+Abies,(true) fir ,softwood
+A. alba,Norway fir,softwood
+A. amabilis,Pacific silver fir,softwood
+A. balsamea,balsam fir,softwood
+A. concolor,white fir,softwood
+A. grandis,grand fir,softwood
+A. lasiocarpa,subalpine fir,softwood
+A. magnifica,California red fir,softwood
+A. procera,noble fir,softwood
+Chamaecyparis,white-cedar,softwood
+C. lawsoniana,Port-Orford-cedar,softwood
+C. nootkatensis,Alaska-cedar,softwood
+C. thyoides,Atlantic white-cedar,softwood
+Juniperus virginiana Larix,eastern redcedar,softwood
+Larix,larch,softwood
+L. decidua,European larch,softwood
+L. laricina,tamarack,softwood
+L. occidentalis,western larch,softwood
+Libocedrus decurrens,incense-cedar,softwood
+Picea,spruce,softwood
+P. abies,Norway spruce,softwood
+P. engelmannii,Engelmann spruce,softwood
+P. glauca,white spruce,softwood
+P. mariana,black spruce,softwood
+P. rubens,red spruce,softwood
+P. sitchensis,Sitka spruce,softwood
+Pinus,pine,softwood
+P. albicaulis,whitebark pine,softwood
+P. contorta,lodgepole pine,softwood
+P. echinata,shortleaf pine,softwood
+P. elliottii,slash pine,softwood
+P. flexilis,limber pine,softwood
+P. lambertiana,sugar pine,softwood
+P. monticola,westem white pine,softwood
+P. palustris,longleaf pine,softwood
+P. ponderosa,ponderosa pine,softwood
+P. resinosa,red pine,softwood
+P. rigida,pitch pine,softwood
+P. strobus,eastern white,softwood
+P. sylvestris,pine Scots pine,softwood
+P. taeda,loblolly pine,softwood
+Pseudotsuga menziesii,Douglas-fir,softwood
+Sequoia sempervirens,redwood,softwood
+Sequoiadendron giganteum,giant sequoia,softwood
+Tax ium distichum,baldcypress,softwood
+Taxus,yew,softwood
+T. baccata,European yew,softwood
+T. brevifolia,Pacific yew,softwood
+Thuja,thuja,softwood
+T. occidentalis,northern white-cedar,softwood
+T. plicata,western redcedar,softwood
+Tsuga,heml k,softwood
+T. canadensis,eastern hemlock,softwood
+T. heterophylla,western hemlock,softwood
+Acer,maple,hardwood
+A. campestre,field maple,hardwood
+A. macrophyllum,bigleaf maple,hardwood
+A. negundo,boxelder,hardwood
+A. nigrum,black maple,hardwood
+A. platanoides,Norway maple,hardwood
+A. pseudoplatanus,sycamore (British),hardwood
+A. rubrum,red maple,hardwood
+A. saccharinum,silver maple,hardwood
+A. saccharum,sugar maple,hardwood
+Aesculus,"buckeye, horsechestnut",hardwood
+A. glabra,Ohio buckeye,hardwood
+A. hippocastanum,horsechestnut,hardwood
+A. octandra,yellow buckeye,hardwood
+Alnus,alder,hardwood
+A. glutinosa,common alder,hardwood
+A. incana,grey alder,hardwood
+A. rubra,red alder,hardwood
+Betula,birch,hardwood
+B. alleghaniensis,yellow birch,hardwood
+B. lenta,sweet birch,hardwood
+B. papyrifera,paper birch,hardwood
+B. pendula,European (silver) birch,hardwood
+B. pubescens,European (white) birch,hardwood
+Carpinus carolliniana,American hornbeam,hardwood
+Carya,(true) hickory,hardwood
+C. glabra,pignut hickory,hardwood
+C. laciniosa,shellbark hickory,hardwood
+C. ovata,shagbark hickory,hardwood
+C. tomentosa,mockernut hickory,hardwood
+Carya,pecan hickory,hardwood
+C. aquatica,water hickory,hardwood
+C. cordiformis,bitternut hickory,hardwood
+C. illinoensis,pecan,hardwood
+C. myristiciformis,nutmeg hickory,hardwood
+Castenea,chestnut,hardwood
+C. denta,American chestnut,hardwood
+C. sativa,sweet chestnut,hardwood
+Castanopsis chyrsophylla,giant chinkapin,hardwood
+Catalpa,catalpa,hardwood
+C. bignonioides,southem catalpa,hardwood
+C. speciosa,northern catalpa,hardwood
+Celtis,"hackberry, sugarberry",hardwood
+C. laevigata,sugarberry,hardwood
+C. occidentalis,hackberry,hardwood
+Cornus,dogwood,hardwood
+C. florida,flowering dogwood,hardwood
+C. nuttallii,Pacific dogwood,hardwood
+Diospyros virginiana,common,hardwood
+Fagus,beech,hardwood
+F. grandifolia,American beech,hardwood
+F. sylvatica,European beech,hardwood
+Fraxinus,ash,hardwood
+F. americana,white ash,hardwood
+F. excelsior,European ash,hardwood
+F. latifolia,Oregon ash,hardwood
+F. nigra,black ash,hardwood
+F. pennsylvanica,green ash,hardwood
+Gleditsia triacanthos,honeylocust,hardwood
+Gymnocladus dioicus,Kentucky coffeetree,hardwood
+Llex,holly,hardwood
+I. aquifolium,English holly,hardwood
+I. opaca,American holly,hardwood
+Juglans,"walnut, butternut",hardwood
+J. californica,southern California walnut,hardwood
+J. cinera,butternut,hardwood
+J. hindsii,northern California walnut,hardwood
+J. nigra,black walnut,hardwood
+J. regia,European walnut,hardwood
+Liquidambar styraciflua,sweetgum,hardwood
+Liriodendron tulipifera,yellow-poplar,hardwood
+Lithocarpus densiflorus,tanoak,hardwood
+Maclura pomifera,Osage-orange,hardwood
+Magnolia,"cucumbertree, magnolia",hardwood
+M. acuminata,cucumbertree,hardwood
+M. grandiflora,southern magnolia,hardwood
+Malus spp.,apple,hardwood
+Morus rubra,red mulberry,hardwood
+Nyssa sylvantica,black tupelo,hardwood
+Ostrya virginiana,eastern hophornbeam,hardwood
+Platanus,"sycamore, plane",hardwood
+P. occidentalis,sycamore,hardwood
+P. acerifolia,London plane,hardwood
+Populus,"aspen, cottonwood, poplar",hardwood
+P. alba,white poplar,hardwood
+P. balsamifera,balsam poplar,hardwood
+P. canescens,gray poplar,hardwood
+P. deltoides,eastern cottonwood,hardwood
+P. grandidentata,bigtooth aspen,hardwood
+P. heterophylla,swamp cottonwood,hardwood
+P. nigra,European black poplar,hardwood
+P. tremula,European aspen,hardwood
+P. tremuloides,quaking aspen,hardwood
+P. trichocarpa,black cottonwood,hardwood
+Prunus,cherry,hardwood
+P. avium,European cherry,hardwood
+P. serotina,black cherry,hardwood
+Pyrrus spp.,pear,hardwood
+Quercus,oak,hardwood
+Q. alba,white oak,hardwood
+Q. bicolor,swamp white oak,hardwood
+Q. coccinea,scarlet oak,hardwood
+Q. falca,southern red oak,hardwood
+Q. gar ana,Oregon white oak,hardwood
+Q. kello ii,California black oak,hardwood
+Q. lyrata,overcup oak,hardwood
+Q. macrocarpa,bur oak,hardwood
+Q. palus is,pin oak,hardwood
+Q. petraea,sessile oak,hardwood
+Q. prinus,chestnut oak,hardwood
+Q. robur,European oak,hardwood
+Q. rubra,northern red oak,hardwood
+Q. stella,post oak,hardwood
+Q. velutina,black oak,hardwood
+Q. virginiana,live oak,hardwood
+Rhus typhina,staghorn sumac,hardwood
+Robinia pseudoacacia,black locust,hardwood
+Salix,willow,hardwood
+S. alba,white willow,hardwood
+S. nigra,black willow,hardwood
+Sassafras albidum,sassafras,hardwood
+Tilia,"basswood, lime",hardwood
+T. americana,American basswood,hardwood
+T. heterophylla,white basswood,hardwood
+T. vulgaris,European lime,hardwood
+Ulmus,elm,hardwood
+U. alata,winged elm,hardwood
+U. americana,American elm,hardwood
+U. crassifolia,cedar elm,hardwood
+U. glabra,wych elm,hardwood
+U. procera,English elm,hardwood
+U. rubra,slippery elm,hardwood
+U. thomasii,rock elm,hardwood
+Umbellularia californica,California-laurel,hardwood
+Acacia koa,koa,tropical hardwood
+Cedrela spp.,Spanish-cedar,tropical hardwood
+Chlorophora excelsa,iroko,tropical hardwood
+Chloroxylon swietenia,Ceylon satinwood,tropical hardwood
+Cybistax donnell-smithii,primavera,tropical hardwood
+Dalbergia frustesns var. tementosa,Brazilian tulipwood,tropical hardwood
+Dalbergia latifolia,Indian rosewood,tropical hardwood
+Dalbergia stevensonnii,Honduras rosewood,tropical hardwood
+Dicorynia guianensis,basralocus,tropical hardwood
+Diospyros spp.,ebony,tropical hardwood
+Dyera costulata,jelutong,tropical hardwood
+Entandrophragma cylindricum,sapele,tropical hardwood
+Gonystylus,macrophyllum,tropical hardwood
+Guaiacum spp.,ramin,tropical hardwood
+Kaya spp.,African mahogany,tropical hardwood
+Lophira alata,ekki,tropical hardwood
+Mansonia altissima,mansonia,tropical hardwood
+Ochroma pyramidale,balsa,tropical hardwood
+Peltogyne spp.,purpleheart,tropical hardwood
+Pericopsis elata,afrormosia,tropical hardwood
+Phoebe perosa,imbuia,tropical hardwood
+Pterocarpus spp.,padauk,tropical hardwood
+Shorea spp.,white lauan,tropical hardwood
+Shorea spp.,yellow meranti,tropical hardwood
+Swietenia spp.,Central American mahogany,tropical hardwood
+Tectona grandis,teak,tropical hardwood
+Tenninalia superba,korina,tropical hardwood
+Tripplochiton scleroxylon,obeche,tropical hardwood
+Turraeanthus africanus,avodire,tropical hardwood
