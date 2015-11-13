@@ -45,7 +45,7 @@ def main():
 	target = args.target[0]
 	params = json.loads(args.params)
 	format_ = args.format
-	return to_format(source, target, params, format_)
+	to_format(source, target, params, format_)
 # ------------------------------------------------------------------------------
 
 if __name__ == '__main__':

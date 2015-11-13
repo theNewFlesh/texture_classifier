@@ -13,14 +13,11 @@ from PIL import Image
 from core.image_scanner import ImageScanner
 # ------------------------------------------------------------------------------
 
-def execute_python_subshells(iterable, script, args=[]):
-    cmd = [
-        'for f in', ' '.join(iterable), ';',
-            'do (python', script, ' '.join(args), '$f 2>/dev/null &);',
-        'done'
-    ]
-    cmd = ' '.join(cmd)
-    subprocess.call(cmd, shell=True, stdout=PIPE, stderr=PIPE)
+def execute_python_subshells(script, iterable):
+    for item in iterable:
+        cmd = script, ' '.join(item), '2>/dev/null &'
+        cmd = ' '.join(cmd)
+        subprocess.Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
 # ------------------------------------------------------------------------------
 
 def get_info(root, spec, ignore=['\.DS_Store']):
@@ -58,16 +55,12 @@ def to_format(source, target, params, format_):
     '''
     data = get_data(source, params)
     data = DataFrame(data)
-
-    base, filename = os.path.split(source)
-    filename = os.path.splitext(filename)[0] + '.' + format_
-    output = os.path.join(target, filename)
     
     func = getattr(data, 'to_' + format_)
     if format_ in ['hdf']:
-        func(output, None)
+        func(target, None)
     else:
-        func(output)
+        func(target)
 
 def to_archive(source, target, format_, spec, params, cores=100):
     source = get_info(source, spec).fullpath
@@ -80,7 +73,7 @@ def to_hdf_archive(source, target, spec, params):
     info = get_info(source, spec)
     info['params'] = [params] * info.shape[0]
     format_ = info.extension.unique()
-    if len(format_) > 1:
+    if format_.size > 1:
         raise StandardError('multiple formats detected')
     format_ = format_[0]
 
