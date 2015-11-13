@@ -97,13 +97,12 @@ def to_hdf_archive(source, target, spec, params):
             data.append(func(file_))
 
     data = pd.concat(data, axis=0)
-    data['y'] = y
 
-    index = data.index
-    np.random.shuffle(index.tolist())
-    data = data.ix[index]
-    X = data.drop('y', axis=1)
-    y = data['y']
+    index = data.index.tolist()
+    np.random.shuffle(index)
+    data.index = index
+    X = data
+    y.index = index
     
     hdf = HDFStore(target)
     hdf['info'] = info
