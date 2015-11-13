@@ -1,0 +1,52 @@
+#! /usr/bin/env python
+
+import sys
+import os
+import inspect
+_path = inspect.currentframe()
+_path = inspect.getfile(_path)
+_path = os.path.abspath(_path)
+_path = os.path.dirname(os.path.dirname(_path))
+_path = os.path.join(_path, 'python')
+sys.path.append(_path)
+
+import argparse
+import json
+from core.utils import to_format
+# ------------------------------------------------------------------------------
+
+_PARAMS = json.dumps({
+            'aspect_ratio':     1,
+            'min_size':         0.05,
+            'max_size':         0.1,
+            'patches':          1000,
+            'patch_resolution': (100, 100),
+            'rotation':         'random'
+})
+_FORMAT = 'msgpack' 
+
+def main():
+	parser = argparse.ArgumentParser(description='to_format CLI tool')
+	
+	parser.add_argument('source', metavar='str', type=str, nargs=1,
+						action='store', help='source dirctory')
+
+	parser.add_argument('target', metavar='str', type=str, nargs=1,
+						action='store', help='target directory')
+
+	parser.add_argument('-p', '--params', metavar='str', type=str, nargs='?',
+						action='store', default=_PARAMS, help='params')
+	
+	parser.add_argument('-f', '--format', metavar='str', type=str, nargs='?',
+						action='store', default=_FORMAT, help='format')
+	
+	args = parser.parse_args()
+	source = args.source[0]
+	target = args.target[0]
+	params = json.loads(args.params)
+	format_ = args.format
+	return to_format(source, target, params, format_)
+# ------------------------------------------------------------------------------
+
+if __name__ == '__main__':
+	main()
