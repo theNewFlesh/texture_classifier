@@ -1,5 +1,6 @@
 import os
 import re
+from itertools import *
 from copy import copy
 import multiprocessing
 import numpy as np
@@ -24,29 +25,36 @@ def get_series_info(root, spec, ignore=['\.DS_Store']):
 # ------------------------------------------------------------------------------
 
 # defined in module body for multiprocessing
-def __get_data(args):
-    fullpath, patches, params = args
-    img = Image.open(fullpath)
+def _get_data(fullpath, patches, params):
+    img = Image.open(fullpath, 'r')
     scan = ImageScanner(img, **params)
     patches = scan.random_scan(patches)
     X = np.array(patches.next())
     X = X.reshape(1, X.size)
-    for patch in patches:
+    for patch in patches: 
         x = np.array(patch).ravel()
         x = x.reshape(1, x.size)
         X = np.append(X, x, axis=0)
     img.close()
     return X
 
-def get_data(info, params, cores=100):
+def _to_msgpack(args):
+    fullpath, patches, params = args
+    data = _get_data(fullpath, patches, params)
+    base, filename = os.path.split(fullpath)
+    filename = os.path.splitext(filename)[0] + '.msgpack'
+    base = os.path.split(base)[0]
+    output = os.path.join(base, 'msgpack', filename)
+    DataFrame(data).to_msgpack(filename)
+
+def archive_data(info, params, cores=100):
     patches = params.pop('patches')
     pool = multiprocessing.Pool(processes=cores)
-    data = pool.map(__get_data, imap(lambda x: (x, patches, params), info.fullpath))
-    data = np.concatenate(data, axis=0)
-    return data
+    pool.map(_to_msgpack, map(lambda x: (x, patches, params), info.fullpath))
+    pool.close()
 # ------------------------------------------------------------------------------
 
-__all__ = ['get_series_info', 'get_data']
+__all__ = ['get_series_info', 'archive_data']
 
 def main():
     pass
