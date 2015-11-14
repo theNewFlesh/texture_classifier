@@ -79,7 +79,7 @@ def to_hdf_archive(source, target, spec, params):
 
     y = Series(info.index).apply(lambda x: [x]) * params['patches']
     y = list(chain(*y.tolist()))
-    y = Series(y)
+    y = Series(y).astype(int)
 
     data = []
     for file_ in info.fullpath: 
@@ -89,13 +89,15 @@ def to_hdf_archive(source, target, spec, params):
         else:
             data.append(func(file_))
 
-    data = pd.concat(data, axis=0)
+    data = pd.concat(data, axis=0, ignore_index=True).astype(int)
 
     index = data.index.tolist()
     np.random.shuffle(index)
-    data.index = index
+    y = y.reindex(index)
+    y.reset_index(drop=True, inplace=True)
+    data = data.reindex(index)
+    data.reset_index(drop=True, inplace=True)
     X = data
-    y.index = index
     
     hdf = HDFStore(target)
     hdf['info'] = info
