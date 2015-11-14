@@ -1,12 +1,46 @@
 from __future__ import division
 from itertools import *
-# import multiprocessing
 import numpy as np
 # ------------------------------------------------------------------------------
 
 class ImageScanner(object):
+    '''Used for scanning images and producting image pathches through various techniques'''
     def __init__(self, image, aspect_ratio=None, min_size=0.1, max_size=0.2,
-                 patch_resolution=None, resample=0, rotation=None): #, cores=24):
+                 patch_resolution=None, resample=0, rotation=None):
+        '''
+        Args:
+            image (PIL.Image): Python Imaging Library Image object
+
+            aspect_ratio (Optional[tuple or 'auto']):
+                sampling aspect ratio
+                default: None
+
+            min_size (Optional[float]):
+                minimum sampling size
+                default: 0.1 (10%)
+
+            max_size (Optional[float]):
+                maximum sampling size
+                default: 0.2 (20%)
+
+            patch_resolution (Optional[tuple]):
+                output patch resolution (x, y)
+                default: None
+
+            resample (Optional[str]):
+                resampling tfilter used by PIL.Image
+                options include:
+                    `PIL.Image.NEAREST`  (use nearest neighbour)
+                    `PIL.Image.BILINEAR` (linear interpolation)
+                    `PIL.Image.BICUBIC`  (cubic spline interpolation)
+                    `PIL.Image.LANCZOS`  (a high-quality downsampling filter)
+                default: 0
+
+            rotation (Optional[int or str]):
+                degree of rotation to be applied to output patches
+                options include: 0, 90, 180, 270, 'random'
+                default: None
+        '''
         # generate maximum patch aspect
         x, y = None, None
         if not aspect_ratio:
@@ -24,30 +58,21 @@ class ImageScanner(object):
         self._resample = resample
         self._rotation = rotation
         self._patch_resolution = None
-        # self._cores = cores
         if patch_resolution != None:
             if not isinstance(patch_resolution, str):
                 self._patch_resolution = patch_resolution
             elif patch_resolution is 'auto':
                 self._patch_resolution = self._min_resolution
-    # --------------------------------------------------------------------------
 
-    @property
-    def _variables(self):
-        '''
-        conveinience method for returning oft used attributes
-        '''
-        return (
-            self._image,
-            self._min_resolution,
-            self._max_resolution
-        )
+        # convenience attribute
+        self.__vars = self._image, self._min_resolution, self._max_resolution
+    # --------------------------------------------------------------------------
 
     def _even_resolutions(self, patches):
         '''
         generate a list of evenly spaced patch resolutions
         '''
-        img, min_, max_ = self._variables
+        img, min_, max_ = self.__vars
 
         x = np.linspace(min_[0], max_[0], patches, dtype=int)
         y = np.linspace(min_[1], max_[1], patches, dtype=int)
@@ -57,7 +82,7 @@ class ImageScanner(object):
         '''
         generate a list of randomly spaced patch resolutions
         '''
-        img, min_, max_ = self._variables
+        img, min_, max_ = self.__vars
         
         # steps should be set to the patch size range of lesser of
         # max_resolution's two dimensions
@@ -71,6 +96,9 @@ class ImageScanner(object):
             yield x[index-1], y[index-1]
 
     def _get_patch(self, bbox):
+        '''
+        return a cropped (resized amd/or rotated) image based upon bounding box
+        '''
         img = self._image.crop(bbox)
         rotations = [0, 90, 180, 270]
         if self._patch_resolution:
@@ -83,47 +111,82 @@ class ImageScanner(object):
         return img
     # --------------------------------------------------------------------------
 
-    def get_resolutions(self, patches=10, resolutions='even'):
+    def get_resolutions(self, num=10, spacing='even'):
         '''
         generates a list of patch resolutions
+
+        Args:
+            num (Optional[int]):
+                number of resolutions returned
+                default: 10
+
+            spacing (Optional[str]):
+                spacing between resolution sizes
+                options include: 'even', 'random'
+                default: 'even'
+
+        Yields:
+            tuple: (x, y) resolution
         '''
         if resolutions == 'even':
             return self._even_resolutions(patches)
         elif resolutions =='random':
             return self._random_resolutions(patches)
-        
-    def _grid_scan(self, resolution):
-        '''
-        scan entire area of image given a sample resolution
-        '''
-        img, min_, max_ = self._variables
-        
-        bbox_x, bbox_y = img.getbbox()[-2:]
-        x_sample, y_sample = resolution
-        x_scans = int(bbox_x / x_sample)
-        y_scans = int(bbox_y / y_sample)
-        for row in xrange(y_scans):
-            upper = y_sample * row
-            lower = upper + y_sample
-            for col in xrange(x_scans):
-                left = x_sample * col
-                right = left + x_sample
-                bbox = (left, upper, right, lower)
-                yield self._get_patch(bbox)
 
-    def grid_scan(self, patches=10, resolutions='even'):
+    def grid_scan(self, resolutions=10, spacing='even'):
         '''
         scans entire image in a grid-like fashion
+
+        Args:
+            resolutions (Optional[int]):
+                number of sampling patch resolutions to return
+                a single grid produces multiple patches (image / sampling resolution)
+                default: 10
+
+            spacing (Optional[str]):
+                spacing between resolution sizes
+                options include: 'even', 'random'
+                default: 'even'
+
+        Yields:
+            PIL.Image: cropped (resized and/or rotated) patch
         '''
-        rez = self.get_resolutions(patches, resolutions)
-        output = map(self._grid_scan, rez)
+        def _grid_scan(resolution):
+            '''
+            scan entire area of image given a sample resolution
+            '''
+            img, min_, max_ = self.__vars
+            
+            bbox_x, bbox_y = img.getbbox()[-2:]
+            x_sample, y_sample = resolution
+            x_scans = int(bbox_x / x_sample)
+            y_scans = int(bbox_y / y_sample)
+            for row in xrange(y_scans):
+                upper = y_sample * row
+                lower = upper + y_sample
+                for col in xrange(x_scans):
+                    left = x_sample * col
+                    right = left + x_sample
+                    bbox = (left, upper, right, lower)
+                    yield self._get_patch(bbox)
+
+        rez = self.get_resolutions(patches, spacing)
+        output = map(_grid_scan, rez)
         return chain.from_iterable(output)
 
     def random_scan(self, patches=100):
         '''
-        generates random patches of image
+        generates patches of random sample size and location from image
+
+        Args:
+            patches (Optional[int]):
+                number of patches returned
+                default: 100
+
+        Yields:
+            PIL.Image: cropped (resized and/or rotated) patch
         '''
-        img, min_, max_ = self._variables
+        img, min_, max_ = self.__vars
 
         for x1, y1 in self._random_resolutions(patches):
             x, y = img.size

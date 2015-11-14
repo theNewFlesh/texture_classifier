@@ -1,3 +1,7 @@
+'''
+A utilities library for various io/data aggregation tasks
+'''
+
 import os
 import re
 from itertools import *
@@ -14,6 +18,17 @@ from core.image_scanner import ImageScanner
 # ------------------------------------------------------------------------------
 
 def execute_python_subshells(script, iterable):
+    '''
+    a simple hacky workaroud for multiprocessing's buginess
+    executes a new python subshell per item
+
+    Args:
+        script (str): fullpath of python script to run (check /bin)
+        iterable (iter): list of argument to provide each call
+    
+    Returns:
+        None
+    '''
     for item in iterable:
         cmd = script, ' '.join(item), '2>/dev/null &'
         cmd = ' '.join(cmd)
@@ -21,6 +36,21 @@ def execute_python_subshells(script, iterable):
 # ------------------------------------------------------------------------------
 
 def get_info(root, spec, ignore=['\.DS_Store']):
+    '''
+    creates a descriptive DataFrame based upon files contained with a root directory
+
+    Args:
+        root (str): fullpath to directory of files
+
+        spec (list): naming specification of files (dotslot syntax)
+
+        ignore (Optional(list)):
+            list of regex patterns used for ignoring files
+            default: ['\.DS_Store']
+
+    Returns:
+        DataFrame: an info DataFrame
+    '''
     spec = copy(spec)
     images = os.listdir(root)
     for regex in ignore:
@@ -35,6 +65,17 @@ def get_info(root, spec, ignore=['\.DS_Store']):
     return DataFrame(data, columns=spec)
 
 def get_data(fullpath, params):
+    '''
+    creates raveled data based upon an image and scanning parameters
+
+    Args:
+        fullpath (str): fullpath to image file
+
+        params (dict): parameters to provide to ImageScanner class
+
+    Returns:
+        numpy.array: raveled numpy array (1, n)
+    '''
     img = Image.open(fullpath, 'r')
     patches = params.pop('patches')
     scan = ImageScanner(img, **params)
@@ -52,6 +93,20 @@ def get_data(fullpath, params):
 def to_format(source, target, params, format_):
     '''
     generates patches for a single image and ouputs them to a file
+
+    Args:
+        source (str): fullpath to source file
+
+        target (str): fullpath to target file
+
+        params (dict): parameters to provide to ImageScanner class
+
+        format_ (str):
+            file format for output data
+            options include: 'hdf', 'msgpack', 'json', 'csv'
+
+    Returns:
+        None
     '''
     data = get_data(source, params)
     data = DataFrame(data)
@@ -62,14 +117,53 @@ def to_format(source, target, params, format_):
     else:
         func(target)
 
-def to_archive(source, target, format_, spec, params, cores=100):
+def to_archive(source, target, format_, spec, params, processes=100):
+    '''
+    multiprocessed archiving tool for applyin to_format to files
+
+    Args:
+        source (str): fullpath to source file
+
+        target (str): fullpath to target file
+
+        format_ (str):
+            file format for output data
+            options include: 'hdf', 'msgpack', 'json', 'csv'
+
+        spec (list): naming specification of files (dotslot syntax)
+
+        params (dict): parameters to provide to ImageScanner class
+
+        processes (Optional[int]):
+            number of processes to spawn
+            default: 100
+
+    Returns:
+        None
+    '''
     source = get_info(source, spec).fullpath
-    pool = multiprocessing.Pool(processes=cores)
+    pool = multiprocessing.Pool(processes=processes)
     iterable = [(src, target, params, format_) for src in source]
     pool.map(to_format, iterable)
     pool.close()
 
 def to_hdf_archive(source, target, spec, params):
+    '''
+    convert a directory of archived data into a single data archive file
+
+    Args:
+        source (str): fullpath to source directory of archive data
+
+        target (str): fullpath to target directory
+
+        spec (list): naming specification of files (dotslot syntax)
+
+        params (dict): parameters to provide to ImageScanner class
+
+    Returns:
+        None
+    '''
+
     info = get_info(source, spec)
     info['params'] = [params] * info.shape[0]
     format_ = info.extension.unique()
