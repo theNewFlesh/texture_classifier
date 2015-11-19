@@ -5,23 +5,19 @@ import numpy as np
 
 class ImageScanner(object):
     '''Used for scanning images and producting image pathches through various techniques'''
-    def __init__(self, image, aspect_ratio=None, min_size=0.1, max_size=0.2,
-                 patch_resolution=None, resample=0, rotation=None):
+    def __init__(self, image, min_resolution=(100, 100), max_resolution=(200, 200),
+                 patch_resolution=None, resample=0, rotation=None, **kwargs):
         '''
         Args:
             image (PIL.Image): Python Imaging Library Image object
-
-            aspect_ratio (Optional[tuple or 'auto']):
-                sampling aspect ratio
-                default: None
-
-            min_size (Optional[float]):
+            
+            min_resolution (Optional[tuple]):
                 minimum sampling size
-                default: 0.1 (10%)
+                default: (100, 100)
 
-            max_size (Optional[float]):
+            max_resolution (Optional[tuple]):
                 maximum sampling size
-                default: 0.2 (20%)
+                default: (200, 200)
 
             patch_resolution (Optional[tuple]):
                 output patch resolution (x, y)
@@ -41,28 +37,14 @@ class ImageScanner(object):
                 options include: 0, 90, 180, 270, 'random'
                 default: None
         '''
-        # generate maximum patch aspect
-        x, y = None, None
-        if not aspect_ratio:
-            x, y = image.size
-        else:
-            x, y = image.size
-            if aspect_ratio >= 1:
-                x = int(y * aspect_ratio)
-            else:
-                y = int(x / aspect_ratio)
-
         self._image = image
-        self._min_resolution = int(min_size * x), int(min_size * y)
-        self._max_resolution = int(max_size * x), int(max_size * y)
+        self._min_resolution = min_resolution
+        self._max_resolution = max_resolution
+        self._patch_resolution = min_resolution
+        if patch_resolution:
+            self._patch_resolution = patch_resolution
         self._resample = resample
         self._rotation = rotation
-        self._patch_resolution = None
-        if patch_resolution != None:
-            if not isinstance(patch_resolution, str):
-                self._patch_resolution = patch_resolution
-            elif patch_resolution is 'auto':
-                self._patch_resolution = self._min_resolution
 
         # convenience attribute
         self.__vars = self._image, self._min_resolution, self._max_resolution
@@ -89,6 +71,8 @@ class ImageScanner(object):
         steps = max_[0] - min_[0]
         if max_[0] > max_[1]:
             steps = max_[1] - min_[1]
+        if steps == 0:
+            steps = 1
         x = np.linspace(min_[0], max_[0], steps, dtype=int)
         y = np.linspace(min_[1], max_[1], steps, dtype=int)
 
@@ -128,10 +112,10 @@ class ImageScanner(object):
         Yields:
             tuple: (x, y) resolution
         '''
-        if resolutions == 'even':
-            return self._even_resolutions(patches)
-        elif resolutions =='random':
-            return self._random_resolutions(patches)
+        if spacing == 'even':
+            return self._even_resolutions(num)
+        elif spacing =='random':
+            return self._random_resolutions(num)
 
     def grid_scan(self, resolutions=10, spacing='even'):
         '''
