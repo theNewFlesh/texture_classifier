@@ -227,7 +227,7 @@ def get_3d_histogram(image, bins=256, mask=None, normalize=False):
 
 def get_channel_histogram(image, channel, bins=256, normalize=False, **kwargs):
     lut = {
-        'r': 0, 'g': 1, 'b': 2,
+        'r': 2, 'g': 1, 'b': 0,
         'h': 0, 's': 1, 'v': 2
           }
     output = cv2.calcHist([image],[lut[channel]], None, [bins], [0, 256])

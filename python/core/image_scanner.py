@@ -117,7 +117,7 @@ class ImageScanner(object):
         elif spacing =='random':
             return self._random_resolutions(num)
 
-    def grid_scan(self, resolutions=10, spacing='even'):
+    def grid_scan(self, resolutions=10, spacing='even', **kwargs):
         '''
         scans entire image in a grid-like fashion
 
@@ -158,7 +158,7 @@ class ImageScanner(object):
         output = map(_grid_scan, rez)
         return chain.from_iterable(output)
 
-    def random_scan(self, patches=100):
+    def random_scan(self, patches=100, **kwargs):
         '''
         generates patches of random sample size and location from image
 
