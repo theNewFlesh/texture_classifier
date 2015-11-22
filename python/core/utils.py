@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 '''
 A utilities library for various io/data aggregation tasks
 '''
@@ -5,19 +6,82 @@ A utilities library for various io/data aggregation tasks
 import os
 import re
 from itertools import *
-from copy import copy
 import subprocess
 from subprocess import PIPE
-import multiprocessing
 import numpy as np
-import pandas as pd
 from pandas import DataFrame, Series
-from pandas.io.pytables import HDFStore
 from core.image_scanner import ImageScanner
 import PIL
 import cv2
 # ------------------------------------------------------------------------------
 
+def get_report(y_true, y_pred):
+    x = classification_report(y_true, y_pred)
+    x = re.sub('avg / total', 'total', x)
+    x = map(lambda x: re.split(' +', x), x.split('\n'))
+    x = map(lambda x: filter(lambda x: x != '', x), x)
+    x = filter(lambda x: x != [], x)
+    report = DataFrame(x[1:])
+    report.set_index(0, inplace=True)
+    report.columns = x[0]
+    return report
+# ------------------------------------------------------------------------------
+
+def pil_to_opencv(image):
+    return cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+
+def opencv_to_pil(item):
+    return PIL.Image.fromarray(item)
+
+def generate_samples(image, y, params):
+    scan = ImageScanner(image, **params)
+    func = getattr(scan, params['scan_method'])
+    return [[x, y, params] for x in func(**params)]
+
+def get_channel_histogram(image, channel, bins=256, normalize=False, **kwargs):
+    lut = {
+        'r': 2, 'g': 1, 'b': 0,
+        'h': 0, 's': 1, 'v': 2
+          }
+    output = cv2.calcHist([image],[lut[channel]], None, [bins], [0, 256])
+    if normalize:
+        output = cv2.normalize(output)
+    return output.ravel()
+# ------------------------------------------------------------------------------
+
+def get_histograms(image, bins=256, normalize=False, color_space='rgb'):
+    return {chan: get_channel_histogram(image, chan, bins=bins, normalize=normalize) for chan in color_space}
+
+def generate_histograms(item, params, color_space='rgb'):
+    img = opencv_to_pil(item)
+    output = []
+    for p in ImageScanner(img, **params).random_scan(params['patches']):
+        patch = get_histograms(_pil_to_opencv(p), normalize=params['normalize'])
+        output.append(patch)
+    return output
+
+def get_3d_histogram(image, bins=256, mask=None, normalize=False):
+    hist = cv2.calcHist([image],[0,1,2], mask,
+                        [np.sqrt(bins).astype(int)]*3,
+                        [0, 256, 0, 256, 0, 256])
+    if normalize:
+        cv2.normalize(hist, hist)
+    return hist
+# ------------------------------------------------------------------------------
+
+def plot_channel_histogram(image, channel, bins=256, normalize=False):
+    lut = {
+        'r': 'r', 'g': 'g', 'b': 'b',
+        'h': 'w', 's': 'w', 'v': 'w'
+          }
+    hist = get_channel_histogram(image, channel, bins=bins, normalize=normalize)
+    Series(hist).plot(color=lut[channel])
+
+def plot_histograms(image, bins=256, normalize=False):
+    for hist, color in get_histograms(image, bins=bins, normalize=normalize).iteritems():
+        Series(hist).plot(color=color)
+
+# ------------------------------------------------------------------------------
 def execute_python_subshells(script, iterable):
     '''
     a simple hacky workaroud for multiprocessing's buginess
@@ -36,244 +100,18 @@ def execute_python_subshells(script, iterable):
         subprocess.Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
 # ------------------------------------------------------------------------------
 
-def get_info(source, spec, ignore=['\.DS_Store']):
-    '''
-    creates a descriptive DataFrame based upon files contained with a source directory
-
-    Args:
-        source (str): fullpath to directory of files
-
-        spec (list): naming specification of files (dotslot syntax)
-
-        ignore (Optional(list)):
-            list of regex patterns used for ignoring files
-            default: ['\.DS_Store']
-
-    Returns:
-        DataFrame: an info DataFrame
-    '''
-    spec = copy(spec)
-    images = os.listdir(source)
-    for regex in ignore:
-        images = filter(lambda x: not re.search(regex, x), images)
-    data = []
-    for image in sorted(images):
-        datum = []
-        datum.extend(image.split('.'))
-        datum.append(os.path.join(source, image))
-        data.append(datum)
-    spec.append('source')
-    return DataFrame(data, columns=spec)
-
-# def get_data(fullpath, params):
-#     '''
-#     creates raveled data based upon an image and scanning parameters
-
-#     Args:
-#         fullpath (str): fullpath to image file
-
-#         params (dict): parameters to provide to ImageScanner class
-
-#     Returns:
-#         numpy.array: raveled numpy array (1, n)
-#     '''
-#     img = Image.open(fullpath, 'r')
-#     patches = params.pop('patches')
-#     scan = ImageScanner(img, **params)
-#     patches = scan.random_scan(patches)
-#     X = np.array(patches.next())
-#     X = X.reshape(1, X.size)
-#     for patch in patches: 
-#         x = np.array(patch).ravel()
-#         x = x.reshape(1, x.size)
-#         X = np.append(X, x, axis=0)
-#     img.close()
-#     return X
-# ------------------------------------------------------------------------------
-
-def to_format(source, target, params, format_):
-    '''
-    generates patches for a single image and ouputs them to a file
-
-    Args:
-        source (str): fullpath to source file
-
-        target (str): fullpath to target file
-
-        params (dict): parameters to provide to ImageScanner class
-
-        format_ (str):
-            file format for output data
-            options include: 'hdf', 'msgpack', 'json', 'csv'
-
-    Returns:
-        None
-    '''
-    data = get_data(source, params)
-    data = DataFrame(data)
-    
-    func = getattr(data, 'to_' + format_)
-    if format_ in ['hdf']:
-        func(target, 'data')
-    else:
-        func(target)
-
-def get_target(fullpath, format_):
-    base, filename = os.path.split(fullpath)
-    base = os.path.dirname(base)
-    filename = os.path.splitext(filename)[0] + '.' + format_
-    return os.path.join(base, format_, filename)
-
-def to_archive(info, target, format_, spec, params, processes=100):
-    '''
-    multiprocessed archiving tool for applyin to_format to files
-
-    Args:
-        info (DataFrame): info object generated by get_info
-
-        target (str): fullpath to target directory
-
-        format_ (str):
-            file format for output data
-            options include: 'hdf', 'msgpack', 'json', 'csv'
-
-        spec (list): naming specification of files (dotslot syntax)
-
-        params (dict): parameters to provide to ImageScanner class
-
-        processes (Optional[int]):
-            number of processes to spawn
-            default: 100
-
-    Returns:
-        None
-    '''
-    def make_target(item):
-        name = os.path.split(item)[1]
-        return os.path.splitext(name)[0] + '.' + format_
-    info['target'] = info.source.apply(make_target)
-    info.target = info.target.apply(lambda x: os.path.join(target, x))
-    info['target_extension'] = format_
-
-    info['params'] = [params] * info.shape[0]
-    info.to_json(os.path.join(target, 'info.json'))
-    pool = multiprocessing.Pool(processes=processes)
-    for i, row in info.iterrows():
-        pool.apply_async(to_format, (
-            row['source'], row['target'], row['params'], row['target_extension'])
-        )
-    pool.close()
-
-def to_hdf_archive(source, target, spec, params):
-    '''
-    convert a directory of archived data into a single data archive file
-
-    Args:
-        source (str): fullpath to source directory of archive data
-
-        target (str): fullpath to target directory
-
-        spec (list): naming specification of files (dotslot syntax)
-
-        params (dict): parameters to provide to ImageScanner class
-
-    Returns:
-        None
-    '''
-
-    info = get_info(source, spec)
-    info['params'] = [params] * info.shape[0]
-    format_ = info.extension.unique()
-    if format_.size > 1:
-        raise StandardError('multiple formats detected')
-    format_ = format_[0]
-
-    y = Series(info.index).apply(lambda x: [x]) * params['patches']
-    y = list(chain(*y.tolist()))
-    y = Series(y).astype(int)
-
-    data = []
-    for file_ in info.fullpath: 
-        func = getattr(pd, 'read_' + format_)
-        if format_ in ['hdf']:
-            data.append(func(file_, None))
-        else:
-            data.append(func(file_))
-
-    data = pd.concat(data, axis=0, ignore_index=True).astype(int)
-
-    index = data.index.tolist()
-    np.random.shuffle(index)
-    y = y.reindex(index)
-    y.reset_index(drop=True, inplace=True)
-    data = data.reindex(index)
-    data.reset_index(drop=True, inplace=True)
-    X = data
-    
-    hdf = HDFStore(target)
-    hdf['info'] = info
-    hdf['X'] = X
-    hdf['y'] = y
-    hdf.close()
-# ------------------------------------------------------------------------------
-
-def get_3d_histogram(image, bins=256, mask=None, normalize=False):
-    hist = cv2.calcHist([image],[0,1,2], mask,
-                        [np.sqrt(bins).astype(int)]*3,
-                        [0, 256, 0, 256, 0, 256])
-    if normalize:
-        cv2.normalize(hist, hist)
-    return hist
-
-def get_channel_histogram(image, channel, bins=256, normalize=False, **kwargs):
-    lut = {
-        'r': 2, 'g': 1, 'b': 0,
-        'h': 0, 's': 1, 'v': 2
-          }
-    output = cv2.calcHist([image],[lut[channel]], None, [bins], [0, 256])
-    if normalize:
-        output = cv2.normalize(output)
-    return output.ravel()
-
-def plot_channel_histogram(image, channel, bins=256, normalize=False):
-    lut = {
-        'r': 'r', 'g': 'g', 'b': 'b',
-        'h': 'w', 's': 'w', 'v': 'w'
-          }
-    hist = get_channel_histogram(image, channel, bins=bins, normalize=normalize)
-    Series(hist).plot(color=lut[channel])
-
-def get_histograms(image, bins=256, normalize=False, color_space='rgb'):
-    return {chan: get_channel_histogram(image, chan, bins=bins, normalize=normalize) for chan in color_space}
-
-def plot_histograms(image, bins=256, normalize=False):
-    for hist, color in get_histograms(image, bins=bins, normalize=normalize).iteritems():
-        Series(hist).plot(color=color)
-
-def opencv_to_pil(item):
-    return PIL.Image.fromarray(item)
-
-def generate_histograms(item, params, color_space='rgb'):
-    img = opencv_to_pil(item)
-    output = []
-    for p in ImageScanner(img, **params).random_scan(params['patches']):
-        patch = get_histograms(_pil_to_opencv(p), normalize=params['normalize'])
-        output.append(patch)
-    return output
-
 __all__ = [
-            'execute_python_subshells',
-            'get_info',
-            'to_format',
-            'to_archive',
-            'to_hdf_archive',
-            'get_3d_histogram',
-            'get_channel_histogram',
-            'plot_channel_histogram',
-            'get_histograms',
-            'plot_histograms',
-            'opencv_to_pil',
-            'generate_histograms'
+    'get_report',
+    'pil_to_opencv',
+    'opencv_to_pil',
+    'generate_samples',
+    'get_channel_histogram',
+    'get_histograms',
+    'generate_histograms',
+    'get_3d_histogram',
+    'plot_channel_histogram',
+    'plot_histograms',
+    'execute_python_subshells'
 ]
 
 def main():

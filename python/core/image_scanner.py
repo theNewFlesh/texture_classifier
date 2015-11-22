@@ -154,7 +154,7 @@ class ImageScanner(object):
                     bbox = (left, upper, right, lower)
                     yield self._get_patch(bbox)
 
-        rez = self.get_resolutions(patches, spacing)
+        rez = self.get_resolutions(resolutions, spacing)
         output = map(_grid_scan, rez)
         return chain.from_iterable(output)
 
