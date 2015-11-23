@@ -6,9 +6,11 @@ A utilities library for various io/data aggregation tasks
 import os
 import re
 from itertools import *
+from collections import *
 import subprocess
 from subprocess import PIPE
 import numpy as np
+import pandas as pd
 from pandas import DataFrame, Series
 from core.image_scanner import ImageScanner
 import PIL
@@ -80,8 +82,87 @@ def plot_channel_histogram(image, channel, bins=256, normalize=False):
 def plot_histograms(image, bins=256, normalize=False):
     for hist, color in get_histograms(image, bins=bins, normalize=normalize).iteritems():
         Series(hist).plot(color=color)
-
 # ------------------------------------------------------------------------------
+
+def _flatten(data, columns=None, prefix=True, drop=True):
+        '''Split items of iterable elements into separate columns (ripped from sparse)
+
+        Args:
+            dtype (type, optional): Columns types to be split. Default: dict
+            prefix (bool, optional): Append original column name as a prefix to new columns
+
+        Returns: 
+            Flattened DataFrame
+
+        Example:
+            >>> print sdf.data
+                               foo             bar
+            0  {u'a': 1, u'b': 10}     some string
+            1  {u'a': 2, u'b': 20}  another string
+            2  {u'a': 3, u'b': 30}            blah
+
+            >>> sdf.flatten(inplace=True)
+            >>> print sdf.data
+                foo_a    foo_b             bar
+            0       1       10     some string
+            1       2       20  another string
+            2       3       30            blah
+        '''
+        def _reorder_columns(columns, index):
+            new_cols = []
+            for col in columns:
+                if col in index:
+                    if not drop:
+                        new_cols.append(col)
+                    new_cols.extend( index[col] )
+                else:
+                    new_cols.append(col)
+            return new_cols
+
+        col_index = OrderedDict()
+        def _flatten(data, columns):
+            for col in columns:
+                col_index[col] = [] 
+            frames = []
+            for col in columns:
+                frame = DataFrame(data[col].tolist())
+                if prefix:
+                    columns = {}
+                    for k in frame.columns:
+                        columns[k] = str(col) + '_' + str(k)
+                    frame.rename(columns=columns, inplace=True)
+                frames.append(frame)
+                col_index[col].extend( frame.columns.tolist() )
+            data = pd.concat(frames, axis=1)
+            return data
+        
+        flatdata = data
+        old_cols = data.columns.tolist()
+
+        # determine flatenable columns via column mask
+        if columns:
+            flatdata = flatdata[columns]
+        else:
+            mask = data.applymap(lambda x: isinstance(x, list))
+            iterables = data[mask]
+            iterables = iterables.dropna(how='all', axis=1)
+            columns = iterables.columns.tolist()
+        
+        # Get right-hand flattened columns
+        flatdata = _flatten(flatdata, columns)
+        
+        old_cols = data.columns.tolist()
+
+        # drop original columns
+        if drop:
+            data = data.T.drop(columns).T
+
+        # attach right-hand flattened columns to  original columns
+        data = pd.concat([data, flatdata], axis=1)
+
+        return data
+# ------------------------------------------------------------------------------
+
 def execute_python_subshells(script, iterable):
     '''
     a simple hacky workaroud for multiprocessing's buginess
@@ -111,6 +192,7 @@ __all__ = [
     'get_3d_histogram',
     'plot_channel_histogram',
     'plot_histograms',
+    '_flatten',
     'execute_python_subshells'
 ]
 

@@ -9,6 +9,8 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame
 from pandas.io.pytables import HDFStore
+from sklearn.preprocessing import StandardScaler
+from sklearn.cross_validation import train_test_split
 import PIL
 import cv2
 from core.image_scanner import ImageScanner
@@ -115,8 +117,7 @@ def _get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_var', 'fft_max'
     
     # expand columns that contain lists
     if rgb or hsv:
-        sdf = SparseDataFrame(data)
-        data = sdf.flatten(dtype=list)
+        data = _flatten(data)
 
     # shuffle data to destroy serial correlations
     index = data.index.tolist()
@@ -128,12 +129,12 @@ def _get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_var', 'fft_max'
 
 # multiproceesing
 def _multi_get_data(args):
-    return get_data(args[0], features=args[1])
+    return _get_data(args[0], features=args[1])
 
 def get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_var', 'fft_max'],
              multiprocess=True, processes=24):
     if not multiprocess:
-        return _get_data(info features=features)
+        return _get_data(info, features=features)
 
     pool = multiprocessing.Pool(processes=processes)
     iterable = [(row.to_frame().T, features) for i, row in info.iterrows()]
@@ -150,17 +151,23 @@ def get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_var', 'fft_max']
     return data
 # ------------------------------------------------------------------------------
 
-def archive_data(train, test, hdf_path=None):
+def archive_data(train, test, hdf_path=None, cross_val=True):
     hdf = {}
     if hdf_path:
         hdf = HDFStore(hdf_path)
 
     train = get_data(train)
-    train_x, valid_x, train_y, valid_y = train_test_split(train.drop('y', axis=1), train.y, test_size=0.2)
-    hdf['train_x'] = train_x
-    hdf['valid_x'] = valid_x
-    hdf['train_y'] = train_y
-    hdf['valid_y'] = valid_y
+    train_x = train.drop('y', axis=1)
+    train_y = train.y
+    if cross_val:
+        train_x, valid_x, train_y, valid_y = train_test_split(train_x, train_y, test_size=0.2)
+        hdf['train_x'] = train_x
+        hdf['valid_x'] = valid_x
+        hdf['train_y'] = train_y
+        hdf['valid_y'] = valid_y
+    else:
+        hdf['train_x'] = train_x
+        hdf['train_y'] = train_y
 
     test = get_data(test)
     test_x = test.drop('y', axis=1)
@@ -169,10 +176,12 @@ def archive_data(train, test, hdf_path=None):
     hdf['test_x'] = test_x
     hdf['test_y'] = test_y
 
-    if write_hdf:
+    if hdf_path:
         hdf.close()
     
-    return train_x, valid_x, train_y, valid_y, test_x, test_y
+    if cross_val:
+        return train_x, valid_x, train_y, valid_y, test_x, test_y
+    return train_x, test_x, train_y, test_y
 # ------------------------------------------------------------------------------
 
 __all__ = [
