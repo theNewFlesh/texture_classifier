@@ -61,7 +61,7 @@ def info_split(info, test_size=0.2):
     return pd.concat(train, axis=0), pd.concat(test, axis=0)
 # ------------------------------------------------------------------------------
 
-def _get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_var', 'fft_max']):
+def _get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']):
     # create data from info
     data = info.copy()
     data = data[['source', 'common_name', 'params']]
@@ -80,7 +80,7 @@ def _get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_var', 'fft_max'
     # create feature lists
     rgb = filter(lambda x: x in list('rgb'), features)
     hsv = filter(lambda x: x in list('hsv'), features)
-    fft = filter(lambda x: x in ['fft_var', 'fft_max'], features)
+    fft = filter(lambda x: x in ['fft_std', 'fft_max'], features)
     
     # rgb distributions
     if rgb:
@@ -105,8 +105,8 @@ def _get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_var', 'fft_max'
         data.gray = data.gray.apply(lambda x: np.fft.hfft(x).astype(float))
         data.gray = data.gray.apply(lambda x: np.histogram(x.ravel(), bins=256)[0])
         data.gray = data.gray.apply(lambda x: StandardScaler().fit_transform(x))
-        if 'fft_var' in fft:
-            data['fft_var'] = data.gray.apply(lambda x: x.var())
+        if 'fft_std' in fft:
+            data['fft_std'] = data.gray.apply(lambda x: x.std())
         if 'fft_max' in fft:
             data['fft_max'] = data.gray.apply(lambda x: x.max())
 
@@ -131,7 +131,7 @@ def _get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_var', 'fft_max'
 def _multi_get_data(args):
     return _get_data(args[0], features=args[1])
 
-def get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_var', 'fft_max'],
+def get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max'],
              multiprocess=True, processes=24):
     if not multiprocess:
         return _get_data(info, features=features)
@@ -151,12 +151,13 @@ def get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_var', 'fft_max']
     return data
 # ------------------------------------------------------------------------------
 
-def archive_data(train, test, hdf_path=None, cross_val=True):
+def archive_data(train, test, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_max', 'fft_std'],
+                 hdf_path=None, cross_val=True):
     hdf = {}
     if hdf_path:
         hdf = HDFStore(hdf_path)
 
-    train = get_data(train)
+    train = get_data(train, features=features)
     train_x = train.drop('y', axis=1)
     train_y = train.y
     if cross_val:
@@ -169,7 +170,7 @@ def archive_data(train, test, hdf_path=None, cross_val=True):
         hdf['train_x'] = train_x
         hdf['train_y'] = train_y
 
-    test = get_data(test)
+    test = get_data(test, features=features)
     test_x = test.drop('y', axis=1)
     test_y = test.y
 
