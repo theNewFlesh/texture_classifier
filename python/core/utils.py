@@ -9,9 +9,11 @@ from itertools import *
 from collections import *
 import subprocess
 from subprocess import PIPE
+import scipy
 import numpy as np
 import pandas as pd
 from pandas import DataFrame, Series
+from sklearn.metrics import classification_report
 from core.image_scanner import ImageScanner
 import PIL
 import cv2
@@ -44,11 +46,19 @@ def get_channel_histogram(image, channel, bins=256, normalize=False, **kwargs):
     lut = {
         'r': 2, 'g': 1, 'b': 0,
         'h': 0, 's': 1, 'v': 2
-          }
+    }
     output = cv2.calcHist([image],[lut[channel]], None, [bins], [0, 256])
     if normalize:
         output = cv2.normalize(output)
     return output.ravel()
+
+def create_histogram_stats(data, chan_data, channel):
+    data[channel + '_' + 'mean']   = chan_data.apply(lambda x: x.mean() )
+    data[channel + '_' + 'max']    = chan_data.apply(lambda x: x.max() )
+    data[channel + '_' + 'argmax'] = chan_data.apply(lambda x: np.argmax(x) )
+    data[channel + '_' + 'std']    = chan_data.apply(lambda x: x.std() )
+    data[channel + '_' + 'skew']   = chan_data.apply(lambda x: scipy.stats.skew(x) )
+    data[channel + '_' + 'kurt']   = chan_data.apply(lambda x: scipy.stats.kurtosis(x) )
 # ------------------------------------------------------------------------------
 
 def get_histograms(image, bins=256, normalize=False, color_space='rgb'):
@@ -187,6 +197,7 @@ __all__ = [
     'opencv_to_pil',
     'generate_samples',
     'get_channel_histogram',
+    'create_histogram_stats',
     'get_histograms',
     'generate_histograms',
     'get_3d_histogram',
