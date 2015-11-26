@@ -49,29 +49,29 @@ def get_info(source, spec, ignore=['\.DS_Store']):
 
 def info_split(info, test_size=0.2):
     def _info_split(info, test_size=0.2):
-        train_x, test_x, train_y, test_y = train_test_split(info, info.common_name, test_size=test_size)
+        train_x, test_x, train_y, test_y = train_test_split(info, info.label, test_size=test_size)
         return DataFrame(train_x, columns=info.columns), DataFrame(test_x, columns=info.columns)
     
     train = []
     test = []
-    for name in info.common_name.unique():
-        x, y = _info_split(info[info.common_name == name], test_size=test_size)
+    for name in info.label.unique():
+        x, y = _info_split(info[info.label == name], test_size=test_size)
         train.append(x)
         test.append(y)
     return pd.concat(train, axis=0), pd.concat(test, axis=0)
 # ------------------------------------------------------------------------------
 
-def _get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']):
+def process_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']):
     # create data from info
     data = info.copy()
     data.reset_index(drop=True, inplace=True)
-    data = data[['source', 'common_name', 'params']]
+    data = data[['source', 'label', 'params']]
     
     err = data.source.tolist()
 
     data.source = data.source.apply(lambda x: PIL.Image.open(x))
     data = data.apply(lambda x: 
-        generate_samples(x['source'], x['common_name'], x['params']),
+        generate_samples(x['source'], x['label'], x['params']),
         axis=1
     )
     # create new expanded dataframe
@@ -143,12 +143,12 @@ def _get_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max'
 
 # multiproceesing
 def _multi_get_data(args):
-    return _get_data(args[0], features=args[1])
+    return process_data(args[0], features=args[1])
 
 def _batch_get_data(info, multiprocess=True, processes=24,
     features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']):
     if not multiprocess:
-        return _get_data(info, features=features)
+        return process_data(info, features=features)
 
     pool = multiprocessing.Pool(processes=processes)
     iterable = [(row.to_frame().T, features) for i, row in info.iterrows()]
@@ -164,7 +164,7 @@ def _batch_get_data(info, multiprocess=True, processes=24,
 def get_data(info, hdf_path, multiprocess=True, processes=24, write=True,
              features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']):
     if not multiprocess:
-        return _get_data(info, features=features)
+        return process_data(info, features=features)
     
     # irregular index screws up index iterations
     info = info.copy()
@@ -215,6 +215,17 @@ def get_data(info, hdf_path, multiprocess=True, processes=24, write=True,
         hdf['data'] = data
         hdf.close()
 
+    return data
+# ------------------------------------------------------------------------------
+
+def compile_predictions(pred):
+    data = DataFrame()
+    data['yhat'] = pred
+    data['confidence'] = 1
+    data = data.groupby('yhat').agg(lambda x: x.sum() / data.shape[0])
+    data.sort('confidence', ascending=False, inplace=True)
+    data['label'] = data.index
+    data.reset_index(drop=True, inplace=True)
     return data
 # ------------------------------------------------------------------------------
 
@@ -272,11 +283,9 @@ def read_archive(hdf_path, items=['train_x', 'valid_x', 'test_x', 'train_y', 'va
 __all__ = [
     'get_info',
     'info_split',
-    'pil_to_opencv',
-    'opencv_to_pil',
-    'generate_samples',
-    'get_channel_histogram',
+    'process_data',
     'get_data',
+    'compile_predictions',
     'archive_data',
     'read_archive'
 ]

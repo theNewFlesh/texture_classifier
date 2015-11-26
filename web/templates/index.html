@@ -1,0 +1,206 @@
+<!doctype html>
+<html><head>
+    <meta charset="utf-8">
+    <title>Timbr - Wood Identification App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Alex Braun">
+
+    <!-- styles -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <link href="../static/css/main.css" rel="stylesheet">
+    <link href="../static/css/font-style.css" rel="stylesheet">
+    <link href="../static/css/flexslider.css" rel="stylesheet">
+    
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="../static/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../static/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../static/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../static/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../static/ico/apple-touch-icon-57-precomposed.png">
+
+    <!-- Google Fonts call. Font Used Open Sans & Raleway -->
+  <link href="http://fonts.googleapis.com/css?family=Raleway:400,300" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+    $("#btn-blog-next").click(function () {
+      $('#blogCarousel').carousel('next')
+    });
+     $("#btn-blog-prev").click(function () {
+      $('#blogCarousel').carousel('prev')
+    });
+
+     $("#btn-client-next").click(function () {
+      $('#clientCarousel').carousel('next')
+    });
+     $("#btn-client-prev").click(function () {
+      $('#clientCarousel').carousel('prev')
+    });
+    
+});
+
+ $(window).load(function(){
+
+    $('.flexslider').flexslider({
+        animation: "slide",
+        slideshow: true,
+        start: function(slider){
+          $('body').removeClass('loading');
+        }
+    });  
+});
+
+</script>
+  </head>
+  <body>
+  
+    <!-- NAVIGATION MENU -->
+    <div class="navbar-nav navbar-inverse navbar-fixed-top">
+        <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html"><img src="../static/img/logo30.png" alt="">timbr</a>
+        </div> 
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+                  <a href="" onclick="document.getElementById('upload-file').click(); return false">upload</a>
+              </li>
+              <li><a href="" onclick="document.getElementById('upload-submit').click(); return false">predict</a></li>
+              <li><a href="tables.html"><i class="icon-th icon-white"></i>database</a></li>
+              <li><a href="user.html"><i class="icon-user icon-white"></i>about</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <div class="container" id="search-container">
+
+    <!-- FIRST ROW OF BLOCKS -->     
+      <div class="row">
+
+      <!-- WOOD PROFILE -->
+        <div class="col-sm-12 col-md-3 col-lg-3">
+          <div class="dash-unit" id="thumbnail-dash-unit" style="background: url({{ results[0]['source'] }})";>
+        <div id="thumbnail-buffer"></div>
+        <h1 id="thumbnail-title">{{ results[0]['label'] }}</h1>
+        <br>
+        <h1 id="thumbnail-confidence" class='thumbnail-confidence'>{{ results[0]['confidence'] }}</h1>
+        <br>
+      </div>
+        </div>
+
+      <!-- DESCRIPTION -->     
+        <div class="col-sm-12 col-md-9 col-lg-9">
+          <div class="dash-unit" id="description-dash-unit">
+            <dtitle>description</dtitle>
+            <p>{{ results[0]['description'] }}</p>
+            </div>
+        </div>
+
+      </div>
+      <!-- /row -->
+       
+    <!-- SECOND ROW OF BLOCKS -->     
+      <div class="row">
+        <div class="col-sm-12 col-md-3 col-lg-3">
+       <!-- TOP PREDICTIONS -->
+          <div class="dash-unit" id="predictions">
+          <dtitle>Top Predictions</dtitle>
+          <div class="framemail">
+          <div class="window">
+              <ul class="mail">
+                {% for result in results[1:] %}
+                  <li>
+                      <i class="read"></i>
+                      <img src={{ result['source'] }}>
+                      <p class="sender">{{ result['label'] }}</p>
+                      <p class="message"><strong>{{ result['confidence'] }}</strong></p>
+                  </li>
+                {% endfor %}
+              </ul>
+          </div>
+      </div>
+    </div><!-- /dash-unit -->
+    </div><!-- /span3 -->
+
+        <div class="col-sm-12 col-md-9 col-lg-9">
+          <!-- RGB -->
+          <div class="half-unit">
+            <dtitle>rgb histogram</dtitle>
+            <hr>
+      </div>
+
+          <!-- HSV -->
+          <div class="half-unit">
+            <dtitle>hsv histogram</dtitle>
+            <hr>
+      </div>
+        </div>
+
+      </div><!-- /row -->
+    </div><!-- /container -->
+
+  <div id="footerwrap">
+        <footer class="clearfix"></footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-lmd12 col-lg-12">
+            <p>Created By Alex Braun - Copyright 2015</p>
+            </div>
+          </div><!-- /row -->
+        </div><!-- /container -->
+  </div><!-- /footerwrap -->
+
+    <!-- javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="../static/js/bootstrap.js"></script>
+  <script type="text/javascript" src="../static/js/lineandbars.js"></script>
+    
+  <script type="text/javascript" src="../static/js/dash-charts.js"></script>
+  <script type="text/javascript" src="../static/js/gauge.js"></script>
+  
+  <!-- NOTY JAVASCRIPT -->
+  <script type="text/javascript" src="../static/js/noty/jquery.noty.js"></script>
+  <script type="text/javascript" src="../static/js/noty/layouts/top.js"></script>
+  <script type="text/javascript" src="../static/js/noty/layouts/topLeft.js"></script>
+  <script type="text/javascript" src="../static/js/noty/layouts/topRight.js"></script>
+  <script type="text/javascript" src="../static/js/noty/layouts/topCenter.js"></script>
+  
+  <!-- You can add more layouts if you want -->
+  <script type="text/javascript" src="../static/js/noty/themes/default.js"></script>
+    <!-- <script type="text/javascript" src="../static/js/dash-noty.js"></script> This is a Noty bubble when you init the theme-->
+  <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="../static/js/jquery.flexslider.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../static/js/admin.js"></script>
+  
+</body>
+
+  <form action="" method="POST" enctype="multipart/form-data">
+    <input type="file" id="upload-file" name="file[]" multiple="">
+    <input type="submit" id="upload-submit" value="upload">
+  </form>
+
+</html>
