@@ -26,15 +26,19 @@ IMAGE_SPEC = [
 # ------------------------------------------------------------------------------
 
 class TextureClassifier(object):
-	def __init__(self, model_path, db_path):
-		self._model_path = model_path
-		with open(model_path, 'r') as model:
-			self._model = cPickle.load(model)
-
-		self._image_path = os.path.join(db_path, 'image')
+	def __init__(self, db_path):
+		self._db_path = db_path
+		self._model_path = os.path.join(db_path, 'models')
+		self._image_path = os.path.join(db_path, 'images')
 		self._desc_path = os.path.join(db_path, 'descriptions.json')
 		self._temp_path = os.path.join(db_path, 'temp')
-		
+		self.set_model(filename)		
+	
+	def set_model(self, filename):
+		fullpath = os.path.join(self._model_path, filename)
+		with open(fullpath, 'r') as model:
+			self._model = cPickle.load(model)
+
 	@property
 	def info(self):
 		desc = None
