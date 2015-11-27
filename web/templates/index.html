@@ -114,7 +114,9 @@ $(document).ready(function () {
         <div class="col-sm-12 col-md-9 col-lg-9">
           <div class="dash-unit" id="description-dash-unit">
             <dtitle>description</dtitle>
-            <p>{{ results[0]['description'] }}</p>
+            {% for item in results[0]['description'][1:12] %}
+              <p><b id="dash-unit-heading">{{ item['heading'].lower() }}: </b>{{ item['content'].lower() }}</p>
+            {% endfor %}
             </div>
         </div>
 
@@ -135,7 +137,7 @@ $(document).ready(function () {
                       <i class="read"></i>
                       <img src={{ result['source'] }}>
                       <p class="sender">{{ result['label'] }}</p>
-                      <p class="message"><strong>{{ result['confidence'] }}</strong></p>
+                      <p class="message">{{ result['confidence'] }}</p>
                   </li>
                 {% endfor %}
               </ul>

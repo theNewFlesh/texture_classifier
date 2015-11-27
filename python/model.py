@@ -1,5 +1,7 @@
+import os
 import cPickle
-from core.utils import *
+import json
+from core.pipeline import *
 # ------------------------------------------------------------------------------
 
 PARAMS = {
@@ -18,15 +20,7 @@ IMAGE_SPEC = [
     'image_id',
     'label',
     'origin',
-    'description',
-    'extension'
-]
-
-TEXT_SPEC = [
-    'material',
-    'text_id',
-    'label',
-    'origin',
+    'descriptor',
     'extension'
 ]
 # ------------------------------------------------------------------------------
@@ -34,16 +28,22 @@ TEXT_SPEC = [
 class TextureClassifier(object):
 	def __init__(self, model_path, db_path):
 		self._model_path = model_path
-		self._model = cPickle.load(model_path)
-		self._image_path = os.path.join(db_path, 'image')
-		self._text_path = os.path.join(db_path, 'text')
-		self._temp_path = os.path.join(db_path, 'temp')
+		with open(model_path, 'r') as model:
+			self._model = cPickle.load(model)
 
+		self._image_path = os.path.join(db_path, 'image')
+		self._desc_path = os.path.join(db_path, 'descriptions.json')
+		self._temp_path = os.path.join(db_path, 'temp')
+		
 	@property
 	def info(self):
-		img = get_info(self._image_path, IMAGE_SPEC)
-		txt = get_info(self._image_path, TEXT_SPEC)
-		info = img.merge(txt, how='left', on='label')
+		desc = None
+		with open(self._desc_path, 'r') as d:
+			desc = json.load(d)
+
+		info = get_info(self._image_path, IMAGE_SPEC)
+		info['description']	= info.label.apply(
+			lambda x: desc[x] if desc.has_key(x.lower()) else None)	
 		return info
 
 	def get_data(self, fullpath):
@@ -72,7 +72,6 @@ class TextureClassifier(object):
 __all__ = [
 	'PARAMS',
 	'IMAGE_SPEC',
-	'TEXT_SPEC',
 	'TextureClassifier'
 ]
 

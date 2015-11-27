@@ -17,6 +17,7 @@ from sklearn.metrics import classification_report
 from core.image_scanner import ImageScanner
 import PIL
 import cv2
+# from IPython import display
 # ------------------------------------------------------------------------------
 
 def get_report(y_true, y_pred):
@@ -191,6 +192,19 @@ def execute_python_subshells(script, iterable):
         subprocess.Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
 # ------------------------------------------------------------------------------
 
+# def show_image(response):
+#     if not re.search('endgrain|database', response['snippet'], flags=re.IGNORECASE):
+#         print(response['snippet'], response['displayLink'])
+#         img = display.Image(url=r['link'], width=300, height=300)
+#         display.display(img)
+        
+# def display_results(response):
+#     for item in response:
+#         print(item['snippet'], item['displayLink'])
+#         img = display.Image(url=item['link'], width=300, height=300)
+#         display.display(img)
+# ------------------------------------------------------------------------------
+
 __all__ = [
     'get_report',
     'pil_to_opencv',
@@ -205,6 +219,8 @@ __all__ = [
     'plot_histograms',
     '_flatten',
     'execute_python_subshells'
+    # 'show_image',
+    # 'display_results'
 ]
 
 def main():

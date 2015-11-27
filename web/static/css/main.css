@@ -67,8 +67,12 @@
 
 #thumbnail-confidence {
 	font-size: 30px !important;
-	color: grey;
+	color: #616161;
 	font-weight: bold;
+}
+
+#dash-unit-heading {
+	color: #D1B58C;
 }
 
 
@@ -79,7 +83,9 @@ body {
 }
 
 h1 {
-font-family: 'Raleway', sans-serif;}
+font-family: 'Raleway', sans-serif;
+}
+
 
 h3,h4 , h5 {
 	font-family: 'Open Sans', sans-serif;
@@ -124,7 +130,7 @@ h5 {
 .dash-unit dtitle {
 	font-size:11px;
 	text-transform:uppercase;
-	color:#ffffff;
+	color: #CCCCCC;
 	margin:8px;
 	padding:0px;
 	height:inherit	
@@ -184,6 +190,7 @@ h5 {
 	color: inherit;
 	margin: 0 0 10px;
 	padding:5px;
+	white-space: nowrap;
  }
 
 .dash-unit h4 {
@@ -227,7 +234,7 @@ h5 {
 .half-unit dtitle {
 	font-size:10px;
 	text-transform:uppercase;
-	color:#ffffff;
+	color: #CCCCCC;
 	margin:8px;
 	padding:0px;
 	height:inherit	
@@ -465,10 +472,10 @@ digiclock {
 }
 .framemail .window .mail li .sender {
 	color: #e9e8e8;
-	text-shadow: 0 1px 1px hsla(0,0%,100%,.5);
+	/*text-shadow: 0 1px 1px hsla(0,0%,100%,.5);*/
 }
 .framemail .window .mail li .message {
-	color: #999;
+	color: #D1B58C;
 	overflow: hidden;  
 	text-overflow: ellipsis;
 	top: 21px;  
