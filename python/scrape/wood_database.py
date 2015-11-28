@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from __future__ import print_function
+from __future__ import print_function, with_statement
 import os
 import re
 from itertools import *

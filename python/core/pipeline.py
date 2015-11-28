@@ -18,7 +18,7 @@ from core.utils import *
 # ------------------------------------------------------------------------------
 
 # info utils
-def get_info(source, spec, ignore=['\.DS_Store']):
+def get_info(source, spec=['name', 'extension'], sep=None, ignore=['\.DS_Store']):
     '''
     creates a descriptive DataFrame based upon files contained with a source directory
 
@@ -35,13 +35,21 @@ def get_info(source, spec, ignore=['\.DS_Store']):
         DataFrame: an info DataFrame
     '''
     spec = copy(spec)
-    images = os.listdir(source)
+    images = [source]
+    if os.path.isdir(source):
+        images = os.listdir(source)
     for regex in ignore:
         images = filter(lambda x: not re.search(regex, x), images)
     data = []
     for image in sorted(images):
         datum = []
-        datum.extend(image.split('.'))
+        if sep:
+            datum.extend(re.split(sep, image))
+        else:
+            temp = os.path.splitext(image)
+            datum.append(temp[0])
+            datum.append(temp[1].strip('.'))
+
         datum.append(os.path.join(source, image))
         data.append(datum)
     spec.append('source')
@@ -221,7 +229,7 @@ def get_data(info, hdf_path, multiprocess=True, processes=24, write=True,
 def compile_predictions(pred):
     data = DataFrame()
     data['yhat'] = pred
-    data['confidence'] = 1
+    data['confidence'] = 1.0
     data = data.groupby('yhat').agg(lambda x: x.sum() / data.shape[0])
     data.sort('confidence', ascending=False, inplace=True)
     data['label'] = data.index

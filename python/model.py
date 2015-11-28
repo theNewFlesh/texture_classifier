@@ -1,4 +1,6 @@
+from __future__ import print_function, with_statement
 import os
+import time
 import cPickle
 import json
 from core.pipeline import *
@@ -16,43 +18,44 @@ PARAMS = {
 }
 
 IMAGE_SPEC = [
-    'material',
-    'image_id',
-    'label',
-    'origin',
-    'descriptor',
-    'extension'
+	'material',
+	'image_id',
+	'label',
+	'origin',
+	'descriptor',
+	'extension'
 ]
+
+SEP = '\.'
 # ------------------------------------------------------------------------------
 
 class TextureClassifier(object):
-	def __init__(self, db_path):
+	def __init__(self, db_path, model_name):
 		self._db_path = db_path
 		self._model_path = os.path.join(db_path, 'models')
 		self._image_path = os.path.join(db_path, 'images')
 		self._desc_path = os.path.join(db_path, 'descriptions.json')
 		self._temp_path = os.path.join(db_path, 'temp')
-		self.set_model(filename)		
+		self.set_model(model_name)      
 	
 	def set_model(self, filename):
 		fullpath = os.path.join(self._model_path, filename)
 		with open(fullpath, 'r') as model:
 			self._model = cPickle.load(model)
-
+		
 	@property
 	def info(self):
 		desc = None
 		with open(self._desc_path, 'r') as d:
 			desc = json.load(d)
 
-		info = get_info(self._image_path, IMAGE_SPEC)
-		info['description']	= info.label.apply(
-			lambda x: desc[x] if desc.has_key(x.lower()) else None)	
+		info = get_info(self._image_path, IMAGE_SPEC, sep=SEP)
+		info['description'] = info.label.apply(
+			lambda x: desc[x] if desc.has_key(x.lower()) else None) 
 		return info
 
 	def get_data(self, fullpath):
-		spec = ['name', 'extension']
-		info = get_info(fullpath, spec)
+		info = get_info(fullpath)
 		info['label'] = 'unknown'
 		info['params'] = None
 		info.params = info.params.apply(lambda x: PARAMS)
@@ -80,7 +83,7 @@ __all__ = [
 ]
 
 def main():
-    pass
+	pass
 
 if __name__ == '__main__':
-    help(main)
+	help(main)
