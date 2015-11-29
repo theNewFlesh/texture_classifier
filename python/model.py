@@ -3,6 +3,7 @@ import os
 import time
 import cPickle
 import json
+import pandas as pd
 from core.pipeline import *
 # ------------------------------------------------------------------------------
 
@@ -74,6 +75,22 @@ class TextureClassifier(object):
 		pred = compile_predictions(pred)
 		pred = self.get_results(pred)
 		return pred
+
+	def classification_report(self, info):
+		data = []
+		for i, row in info.iterrows():
+			filepath = row['source']
+			pred = self.get_data(filepath)
+			pred = self._model.predict(pred)
+			pred = compile_predictions(pred)
+			pred = pred.head(1)
+			pred['origin'] = row['origin']
+			pred['ytrue'] = row['label']
+			data.append(pred)
+		data = pd.concat(data, axis=0, ignore_index=True)
+		data.columns = ['confidence', 'ypred', 'origin', 'ytrue']
+		data = data[['origin', 'confidence', 'ytrue', 'ypred']]
+		return data
 # ------------------------------------------------------------------------------
 
 __all__ = [

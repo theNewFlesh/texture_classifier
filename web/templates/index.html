@@ -100,21 +100,23 @@ $(document).ready(function () {
       <div class="row">
 
       <!-- WOOD PROFILE -->
-        <div class="col-sm-12 col-md-3 col-lg-3">
+        <div class="col-sm-12 col-md-4 col-lg-4">
           <div class="dash-unit" id="thumbnail-dash-unit" style="background: url({{ results[0]['source'] }})";>
         <div id="thumbnail-buffer"></div>
         <h1 id="thumbnail-title">{{ results[0]['label'] }}</h1>
         <br>
-        <h1 id="thumbnail-confidence" class='thumbnail-confidence'>{{ results[0]['confidence'] }}</h1>
+        <h1 id="thumbnail-confidence" class='thumbnail-confidence'>{{ results[0]['confidence'] }}%</h1>
         <br>
       </div>
         </div>
 
       <!-- DESCRIPTION -->     
-        <div class="col-sm-12 col-md-9 col-lg-9">
+        <div class="col-sm-12 col-md-8 col-lg-8">
           <div class="dash-unit" id="description-dash-unit">
             <dtitle>description</dtitle>
-            {% for item in results[0]['description'][1:12] %}
+            <hr>
+            <p><b class='desc-title'>{{ results[0]['description'][0]['heading'].lower() }}</b></p>
+            {% for item in results[0]['description'][1:] %}
               <p><b id="dash-unit-heading">{{ item['heading'].lower() }}: </b>{{ item['content'].lower() }}</p>
             {% endfor %}
             </div>
@@ -125,7 +127,7 @@ $(document).ready(function () {
        
     <!-- SECOND ROW OF BLOCKS -->     
       <div class="row">
-        <div class="col-sm-12 col-md-3 col-lg-3">
+        <div class="col-sm-12 col-md-4 col-lg-4">
        <!-- TOP PREDICTIONS -->
           <div class="dash-unit" id="predictions">
           <dtitle>Top Predictions</dtitle>
@@ -137,7 +139,7 @@ $(document).ready(function () {
                       <i class="read"></i>
                       <img src={{ result['source'] }}>
                       <p class="sender">{{ result['label'] }}</p>
-                      <p class="message">{{ result['confidence'] }}</p>
+                      <p class="message">{{ result['confidence'] }}%</p>
                   </li>
                 {% endfor %}
               </ul>
@@ -146,18 +148,32 @@ $(document).ready(function () {
     </div><!-- /dash-unit -->
     </div><!-- /span3 -->
 
-        <div class="col-sm-12 col-md-9 col-lg-9">
-          <!-- RGB -->
-          <div class="half-unit">
+        <!-- RGB -->
+        <div class="col-sm-12 col-md-3 col-lg-4">
+          <div class="dash-unit">
             <dtitle>rgb histogram</dtitle>
             <hr>
-      </div>
+            <p class="legend-rgb">
+              <span class='legend-blue'>blue</span>
+              <span class='legend-green'>green</span>
+              <span class='legend-red'>red</span>
+            </p>
+            <img id="rgb-hist" src="../static/database/temp/rgb_hist.png">
+          </div>
+        </div>
 
-          <!-- HSV -->
-          <div class="half-unit">
+        <!-- HSV -->
+        <div class="col-sm-12 col-md-3 col-lg-4">
+          <div class="dash-unit">
             <dtitle>hsv histogram</dtitle>
             <hr>
-      </div>
+            <p class="legend-hsv">
+              <span class='legend-hue'>hue</span>
+              <span class='legend-saturation'>saturaton</span>
+              <span class='legend-value'>value</span>
+            </p>
+            <img id="hsv-hist" src="../static/database/temp/hsv_hist.png">
+          </div>
         </div>
 
       </div><!-- /row -->

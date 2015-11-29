@@ -1,0 +1,650 @@
+[
+  {
+    "origin": "arroway-textures",
+    "confidence": 0.931,
+    "description": [
+      {
+        "content": null,
+        "heading": "Olive (Olea europaea)"
+      },
+      {
+        "content": " Olive",
+        "heading": "Common Name(s)"
+      },
+      {
+        "content": " Olea spp. (Olea europaea, O. capensis)",
+        "heading": "Scientific Name"
+      },
+      {
+        "content": " Europe and eastern Africa",
+        "heading": "Distribution"
+      },
+      {
+        "content": " 25-50 ft (8-15 m) tall, 3-5 ft (1.0-1.5 m) trunk diameter",
+        "heading": "Tree Size"
+      },
+      {
+        "content": " 62 lbs/ft3 (990 kg/m3)",
+        "heading": "Average Dried Weight"
+      },
+      {
+        "content": " .72, .99",
+        "heading": "Specific Gravity (Basic, 12% MC)"
+      },
+      {
+        "content": " 2,700 lbf (12,010 N)",
+        "heading": "Janka Hardness"
+      },
+      {
+        "content": " 22,530 lbf/in2 (155.4 MPa)",
+        "heading": "Modulus of Rupture"
+      },
+      {
+        "content": " 2,577,000 lbf/in2 (17.77 GPa)",
+        "heading": "Elastic Modulus"
+      },
+      {
+        "content": " 11,180 lbf/in2 (77.1 MPa)",
+        "heading": "Crushing Strength"
+      },
+      {
+        "content": " Radial: 5.4%, Tangential: 8.8%, Volumetric: 14.4%, T/R Ratio: 1.6",
+        "heading": "Shrinkage"
+      },
+      {
+        "content": " Heartwood is a cream or yellowish brown, with darker brown or black contrasting streaks. Color tends to deepen with age. Olive is somtimes figured with curly or wavy grain, burl, or wild grain. ",
+        "heading": "Color/Appearance"
+      },
+      {
+        "content": " Grain may be straight, interlocked, or wild. Fine uniform texture with moderate natural luster. ",
+        "heading": "Grain/Texture"
+      },
+      {
+        "content": " Diffuse-porous; small pores in no specific arrangement; solitary, and commonly in radial multiples of 2-3 or rows of 4 or more pores; yellow heartwood deposits present; growth rings may be distinct or indistinct; rays not visible without lens; parenchyma vasicentric, aliform, and confluent, though not distinct with lens. ",
+        "heading": "Endgrain"
+      },
+      {
+        "content": " Conflicting reports range from non-durable/perishable to durable/moderately durable. Olive is susceptible to insect attack. ",
+        "heading": "Rot Resistance"
+      },
+      {
+        "content": " Somewhat easy to work, though wild or interlocked grain may result in tearout during surfacing operations. Olive has high movement in service and is considered to have poor stability. Turns superbly. Glues and finishes well. ",
+        "heading": "Workability"
+      },
+      {
+        "content": " Has a distinct, fruity scent when being worked. ",
+        "heading": "Odor"
+      },
+      {
+        "content": " Although severe reactions are quite uncommon, Olive has been reported as a sensitizer. Usually most common reactions simply include eye and skin irritation. See the articles Wood Allergies and Toxicity and Wood Dust Safety for more information. ",
+        "heading": "Allergies/Toxicity"
+      },
+      {
+        "content": " Because of the fruit’s economic importance, healthy, cultivated Olive trees (O. europaea) aren’t felled for lumber; availability is generally limited to pruned branches, trimmings, and diseased/storm damaged orchard trees. Short lumber, turning squares, and burls are occasionally available from wild trees, as well as the closely related East African Olive (O. capensis). Prices are very high. ",
+        "heading": "Pricing/Availability"
+      },
+      {
+        "content": " This wood species is not listed in the CITES Appendices or on the IUCN Red List of Threatened Species. ",
+        "heading": "Sustainability"
+      },
+      {
+        "content": " High-end furniture, veneer, turned objects, and small specialty wood items. ",
+        "heading": "Common Uses"
+      },
+      {
+        "content": " Olive trees are commercially important throughout the natural regions where they grow. There are several subspecies and hundreds of cultivars of Olea europaea; the olives harvested from the trees are made into olive oil. The mechanical data and density readings shown above are an average between Olea europaea and O. capensis. Olivewood (Olea spp.) is sometimes confused with Russian Olive (Elaeagnus angustifolia), though it bears little relation to true Olive and is in an entirely different family of trees. Technically, Olive is a part of the Oleaceæ family and is more closely related to Ash (Fraxinus spp.) and Lilac (Syringa vulgaris). ",
+        "heading": "Comments"
+      },
+      {
+        "content": " None available. ",
+        "heading": "Related Species"
+      }
+    ],
+    "extension": "png",
+    "descriptor": "--d_a_diffuse",
+    "material": "wood",
+    "label": "olive",
+    "image_id": "00880",
+    "source": "/Users/alexbraun/Documents/projects/texture_classifier/web/static/database/images/wood.00880.olive.arroway-textures.--d_a_diffuse.png"
+  },
+  {
+    "origin": "arroway-textures",
+    "confidence": 0.025,
+    "description": [
+      {
+        "content": null,
+        "heading": "Sapele (Entandrophragma cylindricum)"
+      },
+      {
+        "content": " Sapele, Sapelli, Sapeli",
+        "heading": "Common Name(s)"
+      },
+      {
+        "content": " Entandrophragma cylindricum",
+        "heading": "Scientific Name"
+      },
+      {
+        "content": " Tropical Africa",
+        "heading": "Distribution"
+      },
+      {
+        "content": " 100-150 ft (30-45 m) tall, 3-5 ft (1-1.5 m) trunk diameter",
+        "heading": "Tree Size"
+      },
+      {
+        "content": "  42 lbs/ft3 (670 kg/m3)",
+        "heading": "Average Dried Weight"
+      },
+      {
+        "content": " .50, .67",
+        "heading": "Specific Gravity (Basic, 12% MC)"
+      },
+      {
+        "content": " 1,410 lbf (6,280 N)",
+        "heading": "Janka Hardness"
+      },
+      {
+        "content": " 15,930 lbf/in2 (109.9 MPa)",
+        "heading": "Modulus of Rupture"
+      },
+      {
+        "content": " 1,746,000 lbf/in2 (12.04 GPa)",
+        "heading": "Elastic Modulus"
+      },
+      {
+        "content": " 8,750 lbf/in2 (60.4 MPa)",
+        "heading": "Crushing Strength"
+      },
+      {
+        "content": " Radial: 4.8%, Tangential: 7.2%, Volumetric: 12.8%, T/R Ratio: 1.5",
+        "heading": "Shrinkage"
+      },
+      {
+        "content": " Heartwood is a golden to dark reddish brown. Color tends to darken with age. Besides the common ribbon pattern seen on quartersawn boards, Sapele is also known for a wide variety of  other figured grain patterns, such as: pommele, quilted, mottled, wavy, beeswing, and fiddleback. ",
+        "heading": " Color/Appearance"
+      },
+      {
+        "content": " Grain is interlocked, and sometimes wavy. Fine uniform texture and good natural luster. ",
+        "heading": " Grain/Texture"
+      },
+      {
+        "content": " Diffuse-porous; large pores in no specific arrangement, few; solitary and radial multiples of 2-3; reddish brown deposits occasionally present; parenchyma diffuse-in-aggregates, unilateral, and marginal; rays narrow to medium, spacing normal; ripple marks present. ",
+        "heading": " Endgrain"
+      },
+      {
+        "content": " Heartwood ranges from moderately durable to very durable in regard to decay resistance. Moderate insect/borer resistance. ",
+        "heading": " Rot Resistance"
+      },
+      {
+        "content": " Sapele can be troublesome to work in some machining  operations, (i.e., planing, routing, etc.), resulting in tearout due to its interlocked grain. It will also react when put into direct contact with iron, becoming discolored and stained. Sapele has a slight blunting effect on cutters, but it turns, glues, and finishes well. ",
+        "heading": " Workability"
+      },
+      {
+        "content": " Sapele has a distinct, cedar-like scent while being worked. ",
+        "heading": " Odor"
+      },
+      {
+        "content": " Although severe reactions are quite uncommon, Sapele has been reported as a skin and respiratory irritant. See the articles Wood Allergies and Toxicity and Wood Dust Safety for more information. ",
+        "heading": " Allergies/Toxicity"
+      },
+      {
+        "content": " Should be moderately priced for regular  plainsawn or quartersawn lumber, though figured lumber and veneer can be extremely expensive, particularly pommele or quilted Sapele. ",
+        "heading": " Pricing/Availability"
+      },
+      {
+        "content": " This wood species is not listed in the CITES Appendices, but is on the IUCN Red List. It is listed as vulnerable due to a population reduction of over 20% in the past three generations, caused by a decline in its natural range, and exploitation. ",
+        "heading": " Sustainability"
+      },
+      {
+        "content": " Veneer, plywood, furniture, cabinetry, flooring, boatbuilding, musical instruments, turned objects, and other small wooden specialty items. ",
+        "heading": " Common Uses"
+      },
+      {
+        "content": " Sapele is a commonly exported and economically important African wood species. It’s   sold both in lumber and veneer form. It is occasionally used as a substitute for Genuine Mahogany, and is sometimes referred to as “Sapele Mahogany.” Technically, the two genera that are commonly associated with mahogany are Swietenia and Khaya, while Sapele is in the Entandrophragma genus, but all three are included in the broader Meliaceae family, so comparisons to true mahogany may not be too far fetched. Usually pronounced (sah-PELL-ey) or (sah-PEEL-ey). ",
+        "heading": " Comments"
+      },
+      {
+        "content": "  Utile (Entandrophragma utile)  Related Articles:  Mahogany Mixups: the Lowdown Restricted and Endangered Wood Species  ",
+        "heading": " Related Species"
+      }
+    ],
+    "extension": "png",
+    "descriptor": "--d_a_diffuse",
+    "material": "wood",
+    "label": "sapele",
+    "image_id": "01063",
+    "source": "/Users/alexbraun/Documents/projects/texture_classifier/web/static/database/images/wood.01063.sapele.arroway-textures.--d_a_diffuse.png"
+  },
+  {
+    "origin": "arroway-textures",
+    "confidence": 0.023,
+    "description": [
+      {
+        "content": null,
+        "heading": "Kingwood (Dalbergia cearensis)"
+      },
+      {
+        "content": " Kingwood",
+        "heading": "Common Name(s)"
+      },
+      {
+        "content": " Dalbergia cearensis",
+        "heading": "Scientific Name"
+      },
+      {
+        "content": " Brazil (and occasionally from Mexico)",
+        "heading": "Distribution"
+      },
+      {
+        "content": " 30-60 ft (10-20 m) tall, less than 2 ft (.6 m) trunk diameter",
+        "heading": "Tree Size"
+      },
+      {
+        "content": " 75 lbs/ft3 (1,200 kg/m3)",
+        "heading": "Average Dried Weight"
+      },
+      {
+        "content": " .98, 1.20",
+        "heading": "Specific Gravity (Basic, 12% MC)"
+      },
+      {
+        "content": " 3,340 lbf (17,240 N)",
+        "heading": "Janka Hardness"
+      },
+      {
+        "content": " No data available",
+        "heading": "Modulus of Rupture"
+      },
+      {
+        "content": " No data available",
+        "heading": "Elastic Modulus"
+      },
+      {
+        "content": " No data available",
+        "heading": "Crushing Strength"
+      },
+      {
+        "content": "No data available",
+        "heading": "Shrinkage"
+      },
+      {
+        "content": " Heartwood is a dark purplish or reddish brown with darker black streaks. Sapwood is a pale yellow. ",
+        "heading": "Color/Appearance"
+      },
+      {
+        "content": " Grain is usually straight; occasionally interlocked. Fine, uniform texture and a high natural luster. ",
+        "heading": "Grain/Texture"
+      },
+      {
+        "content": " Diffuse-porous; small pores in no specific arrangement; solitary and radial multiples of 2-3; heartwood deposits occasionally present; growth rings distinct due to seemingly marginal parenchyma bands; rays not visible without lens; parenchyma banded, apotracheal parenchyma diffuse-in-aggregates, paratracheal parenchyma vasicentric, and aliform. ",
+        "heading": "Endgrain"
+      },
+      {
+        "content": " Reported as being very durable in decay resistance, and is also resistance to termites. ",
+        "heading": "Rot Resistance"
+      },
+      {
+        "content": " Tends to be difficult to work due to its high density. Kingwood has a moderate blunting effect on cutters, and tearout can occur during planing if interlocked grain is present. Can be difficult to glue due to natural oils and high density. Turns very well and takes a high polish. ",
+        "heading": "Workability"
+      },
+      {
+        "content": " Distinct, rosewood-like odor when being worked. ",
+        "heading": "Odor"
+      },
+      {
+        "content": " Although severe reactions are quite uncommon, Kingwood has been reported as a sensitizer. Usually most common reactions simply include eye and skin irritation, as well as pink eye. See the articles Wood Allergies and Toxicity and Wood Dust Safety for more information. ",
+        "heading": "Allergies/Toxicity"
+      },
+      {
+        "content": " Likely to be very expensive, and seldom available as lumber; Kingwood is most often seen as smaller turning stock, with its cost being on par with other scarce exotics in the Dalbergia genus. Kingwood is seldom available in large pieces due to the small size of the tree itself, and is instead used as accent pieces. ",
+        "heading": "Pricing/Availability"
+      },
+      {
+        "content": " This wood species is not listed in the CITES Appendices or on the IUCN Red List of Threatened Species. ",
+        "heading": "Sustainability"
+      },
+      {
+        "content": " Inlays, veneers, tool handles, and other small turned and/or specialty items. ",
+        "heading": "Common Uses"
+      },
+      {
+        "content": " Considered a true rosewood in the Dalbergia genus, Kingwood is among the densest (and probably strongest) of all the rosewoods. There is very little mechanical data available on Kingwood, though given its weight, and its relation to other rosewoods, it’s likely to be extremely stiff, strong, and stable. In terms of its history, Kingwood supposedly got its name from several French kings (Louis XIV and Louis XV) that preferred the wood in the use of fine furniture. ",
+        "heading": "Comments"
+      },
+      {
+        "content": "  African Blackwood (Dalbergia melanoxylon) Amazon Rosewood (Dalbergia spruceana) Bois de Rose (Dalbergia maritima) Brazilian Rosewood (Dalbergia nigra) Burmese Blackwood (Dalbergia cultrata) Burmese Rosewood (Dalbergia oliveri) Cocobolo (Dalbergia retusa) East Indian Rosewood (Dalbergia latifolia) Honduran Rosewood (Dalbergia stevensonii) Madagascar Rosewood (Dalbergia baronii) Siamese Rosewood (Dalbergia cochinchinensis) Sissoo (Dalbergia sissoo) Tulipwood (Dalbergia decipularis) Yucatan Rosewood (Dalbergia tucurensis)  Related Articles:  Gluing Oily Tropical Hardwoods Preventing Color Changes in Exotic Woods Top Ten Heaviest Woods  ",
+        "heading": "Related Species"
+      }
+    ],
+    "extension": "png",
+    "descriptor": "--d_a_diffuse",
+    "material": "wood",
+    "label": "kingwood",
+    "image_id": "00660",
+    "source": "/Users/alexbraun/Documents/projects/texture_classifier/web/static/database/images/wood.00660.kingwood.arroway-textures.--d_a_diffuse.png"
+  },
+  {
+    "origin": "arroway-textures",
+    "confidence": 0.013,
+    "description": [
+      {
+        "content": null,
+        "heading": "Peruvian Walnut (Juglans spp.)"
+      },
+      {
+        "content": " Peruvian Walnut, Tropical Walnut, Nogal",
+        "heading": "Common Name(s)"
+      },
+      {
+        "content": " Juglans spp. (Juglans australis, J. neotropica, J. olanchana, etc.)",
+        "heading": "Scientific Name"
+      },
+      {
+        "content": " Southern Mexico, Central and South America",
+        "heading": "Distribution"
+      },
+      {
+        "content": " 30-60 ft (9-18 m) tall, 2-3 ft (.6-1.0 m) trunk diameter",
+        "heading": "Tree Size"
+      },
+      {
+        "content": " 37 lbs/ft3 (600 kg/m3)",
+        "heading": "Average Dried Weight"
+      },
+      {
+        "content": " .50, .60",
+        "heading": "Specific Gravity (Basic, 12% MC)"
+      },
+      {
+        "content": " 960 lbf (4,250 N)",
+        "heading": "Janka Hardness"
+      },
+      {
+        "content": " 11,160 lbf/in2 (77.0 MPa)",
+        "heading": "Modulus of Rupture"
+      },
+      {
+        "content": " 1,132,000 lbf/in2 (7.81 GPa)",
+        "heading": "Elastic Modulus"
+      },
+      {
+        "content": " 6,550 lbf/in2 (45.2 MPa)",
+        "heading": "Crushing Strength"
+      },
+      {
+        "content": " Radial: 3.6%, Tangential: 7.5%, Volumetric: 11.4%, T/R Ratio: 2.1",
+        "heading": "Shrinkage"
+      },
+      {
+        "content": " Heartwood tends to be darker than temperate walnut species, with a deep chocolate brown color, sometimes with a purplish hue. May also contain streaks of lighter-colored wood mixed throughout the heartwood, which can sometimes be extensive and result in a high degree of waste. Grain figuring such as curl seems to be much less common than other walnut species. ",
+        "heading": " Color/Appearance"
+      },
+      {
+        "content": " Grain is usually straight, but can be irregular. Has a medium to coarse texture and good natural luster. ",
+        "heading": " Grain/Texture"
+      },
+      {
+        "content": " Diffuse-porous; large to very large pores, few; solitary and radial multiples of 2-3; tyloses commonly present; growth rings distinct; rays not visible without lens; parenchyma banded. ",
+        "heading": " Endgrain"
+      },
+      {
+        "content": " Peruvian Walnut is rated as moderately durable in terms of decay resistance, though it is susceptible to insect attack. ",
+        "heading": " Rot Resistance"
+      },
+      {
+        "content": " Typically easy to work provided the grain is straight and regular. Planer tearout can sometimes be a problem when surfacing pieces with irregular or figured grain. Glues, stains, and finishes well. ",
+        "heading": " Workability"
+      },
+      {
+        "content": " Peruvian Walnut has a faint, mild odor when being worked that is similar to Black Walnut. ",
+        "heading": " Odor"
+      },
+      {
+        "content": " Other species in the Juglans genus (such as Black, and English Walnut) have been reported as sensitizers, and Peruvian Walnut is likely to generate similar allergic reactions. Usually most common reactions simply include eye and skin irritation. See the articles Wood Allergies and Toxicity and Wood Dust Safety for more information. ",
+        "heading": " Allergies/Toxicity"
+      },
+      {
+        "content": " Peruvian Walnut is more expensive than domestic species of Walnut, though it still tends to be moderately priced for an imported lumber. Expect prices to be similar to other mid-range South American imports. ",
+        "heading": " Pricing/Availability"
+      },
+      {
+        "content": " Peruvian Walnut is not listed in the CITES Appendices, but a number of tropical species in the Juglans genus are on the IUCN Red List. The most notable species, Juglans neotropica, is listed as endangered due to a population reduction of over 50% in the past three generations, caused by a decline in its natural range, and exploitation. ",
+        "heading": " Sustainability"
+      },
+      {
+        "content": " Furniture, cabinetry, veneers, flooring, musical instruments, and interior trim. ",
+        "heading": " Common Uses"
+      },
+      {
+        "content": " Perhaps the most fitting name would be Tropical Walnut, yet the term Peruvian Walnut is commonly used among hardwood dealers, even though the Walnut may not always technically come from Peru. The name Nogal is also used on occasion, and is the Spanish word for Walnut. ",
+        "heading": " Comments"
+      },
+      {
+        "content": "  Black Walnut (Juglans nigra) Butternut (Juglans cinerea) Claro Walnut (Juglans hindsii) English Walnut (Juglans regia)  Related Articles:  Ebony: Dark Outlook for Dark Woods? Restricted and Endangered Wood Species  ",
+        "heading": " Related Species"
+      }
+    ],
+    "extension": "png",
+    "descriptor": "--d_a_diffuse",
+    "material": "wood",
+    "label": "peruvian-walnut",
+    "image_id": "00945",
+    "source": "/Users/alexbraun/Documents/projects/texture_classifier/web/static/database/images/wood.00945.peruvian-walnut.arroway-textures.--d_a_diffuse.png"
+  },
+  {
+    "origin": "arroway-textures",
+    "confidence": 0.009,
+    "description": [
+      {
+        "content": null,
+        "heading": "Teak (Tectona grandis)"
+      },
+      {
+        "content": " Teak, Burmese Teak",
+        "heading": "Common Name(s)"
+      },
+      {
+        "content": " Tectona grandis",
+        "heading": "Scientific Name"
+      },
+      {
+        "content": " Native to southern Asia;",
+        "heading": "Distribution"
+      },
+      {
+        "content": " 100-130 ft (30-40 m) tall, 3-5 ft (1-1.5 m) trunk diameter",
+        "heading": "Tree Size"
+      },
+      {
+        "content": " 41 lbs/ft3 (655 kg/m3)",
+        "heading": "Average Dried Weight"
+      },
+      {
+        "content": " .55, .66",
+        "heading": "Specific Gravity (Basic, 12% MC)"
+      },
+      {
+        "content": " 1,070 lbf (4,740 N)",
+        "heading": "Janka Hardness"
+      },
+      {
+        "content": " 14,080 lbf/in2 (97.1 MPa)",
+        "heading": "Modulus of Rupture"
+      },
+      {
+        "content": " 1,781,000 lbf/in2 (12.28 GPa)",
+        "heading": "Elastic Modulus"
+      },
+      {
+        "content": " 7,940 lbf/in2 (54.8 MPa)",
+        "heading": "Crushing Strength"
+      },
+      {
+        "content": " Radial: 2.6%, Tangential: 5.3%, Volumetric: 7.2%, T/R Ratio: 2.0",
+        "heading": "Shrinkage"
+      },
+      {
+        "content": " Heartwood tends to be a golden or medium brown, with color darkening with age. ",
+        "heading": "Color/Appearance"
+      },
+      {
+        "content": " Grain is straight, though it can occasionally be wavy or interlocked. Coarse, uneven texture and moderate to low natural luster. Raw, unfinished wood surfaces have a slightly oily or greasy feel due to natural oils. ",
+        "heading": "Grain/Texture"
+      },
+      {
+        "content": " Ring-porous or semi-ring-porous; large, solitary earlywood pores, medium-small latewood pores solitary and in radial multiples of 2-3; tyloses and other mineral deposits common; growth rings distinct due to uniseriate row of earlywood pores; rays visible without lens; parenchyma banded (marginal), with bands sometimes wide enough to enclose entire earlywood pores, paratracheal parenchyma vasicentric. ",
+        "heading": "Endgrain"
+      },
+      {
+        "content": " Teak has been considered by many to be the gold standard for decay resistance, and its heartwood is rated as very durable. Teak is also resistant to termites, though it is only moderately resistant to marine borers and powder post beetles. ",
+        "heading": "Rot Resistance"
+      },
+      {
+        "content": " Easy to work in nearly all regards, with the only caveat being that Teak contains a high level of silica (up to 1.4%) which has a pronounced blunting effect on cutting edges. Despite its natural oils, Teak usually glues and finishes well, though in some instances it may be necessary to wipe the surface of the wood with a solvent prior to gluing/finishing to reduce the natural oils on the surface of the wood. ",
+        "heading": "Workability"
+      },
+      {
+        "content": " Teak can have a leather-like scent when freshly milled. ",
+        "heading": "Odor"
+      },
+      {
+        "content": " Although severe reactions are quite uncommon, Teak has been reported as a sensitizer. Usually most common reactions simply include eye, skin, and respiratory irritation, as well as other health effects, such as pink eye, rash, nausea, asthma-like symptoms, and vision effects. See the articles Wood Allergies and Toxicity and Wood Dust Safety for more information. ",
+        "heading": "Allergies/Toxicity"
+      },
+      {
+        "content": " Despite its widespread cultivation on plantations worldwide, Teak is very expensive. It is perhaps one of the most expensive lumbers on the market, at least for large-sized, non-figured wood. Other woods are more expensive, but are typically only available in small pieces, (i.e., Gaboon Ebony or Snakewood), or they are valued solely for the figure of their grain (i.e., burl woods, Pommele Sapele, or Waterfall Bubinga). ",
+        "heading": "Pricing/Availability"
+      },
+      {
+        "content": " This wood species is not listed in the CITES Appendices or on the IUCN Red List of Threatened Species. ",
+        "heading": "Sustainability"
+      },
+      {
+        "content": " Ship and boatbuilding, veneer, furniture, exterior construction, carving, turnings, and other small wood objects. ",
+        "heading": "Common Uses"
+      },
+      {
+        "content": " Sometimes called Burmese Teak, this name is used to differentiate natural-grown trees (typically from Myanmar, aka Burma) from Teak grown on plantations. Used extensively in India and within its natural range for centuries, Teak has grown into a worldwide favorite. With its superb stability, good strength properties, easy workability—and most of all, its outstanding resistance to decay and rot—it’s no wonder that Teak ranks among the most desired lumbers in the world. Much like the many names and knockoffs of Mahogany, the moniker “Teak” has been affixed and assigned to a number of different woods seeking acclaim. The usual procedure is to  take a wood bearing any degree of resemblance to Teak and insert a geographical location in front of the name. For instance, Cumaru is sometimes referred to as Brazilian Teak, while Rhodesian Teak bears little botanical relation to real Teak—Tectona grandis. The name Burmese Teak, however, does refer to genuine Teak. ",
+        "heading": "Comments"
+      },
+      {
+        "content": " None available. Related Articles:  Gluing Oily Tropical Hardwoods  ",
+        "heading": "Related Species"
+      }
+    ],
+    "extension": "png",
+    "descriptor": "--d_a_diffuse",
+    "material": "wood",
+    "label": "teak",
+    "image_id": "01210",
+    "source": "/Users/alexbraun/Documents/projects/texture_classifier/web/static/database/images/wood.01210.teak.arroway-textures.--d_a_diffuse.png"
+  },
+ {
+    "origin": "arroway-textures",
+    "confidence": 0.001,
+    "description": [
+      {
+        "content": null,
+        "heading": "Iroko (Milicia excelsa)"
+      },
+      {
+        "content": " Iroko",
+        "heading": "Common Name(s)"
+      },
+      {
+        "content": " Milicia excelsa, M. regia (syn. Chlorophora excelsa, C. regia)",
+        "heading": "Scientific Name"
+      },
+      {
+        "content": " Tropical Africa",
+        "heading": "Distribution"
+      },
+      {
+        "content": " 100-130 ft (30-40 m) tall, 3-5 ft (1-1.5 m) trunk diameter",
+        "heading": "Tree Size"
+      },
+      {
+        "content": "  41 lbs/ft3 (660 kg/m3)",
+        "heading": "Average Dried Weight"
+      },
+      {
+        "content": " .55, .66",
+        "heading": "Specific Gravity (Basic, 12% MC)"
+      },
+      {
+        "content": " 1,260 lbf (5,610 N)",
+        "heading": "Janka Hardness"
+      },
+      {
+        "content": " 12,700 lbf/in2 (87.6 MPa)",
+        "heading": "Modulus of Rupture"
+      },
+      {
+        "content": " 1,360,000 lbf/in2 (9.38 GPa)",
+        "heading": "Elastic Modulus"
+      },
+      {
+        "content": " 7,840 lbf/in2 (54.0 MPa)",
+        "heading": "Crushing Strength"
+      },
+      {
+        "content": " Radial: 2.8%, Tangential: 3.8%, Volumetric: 8.8%, T/R Ratio: 1.4",
+        "heading": "Shrinkage"
+      },
+      {
+        "content": " Heartwood is usually a yellow to golden or medium brown, with color tending to darken over time. Pale yellow sapwood is clearly demarcated from the heartwood. ",
+        "heading": " Color/Appearance"
+      },
+      {
+        "content": " Iroko has a medium to coarse texture, with open pores and an interlocked grain. ",
+        "heading": " Grain/Texture"
+      },
+      {
+        "content": " Diffuse-porous; large pores in no specific arrangement; solitary and radial multiples of 2-3; tyloses common; growth rings indistinct; rays visible without lens; parenchyma banded, paratracheal parenchyma vasicentric, aliform (winged and lozenge), and confluent. ",
+        "heading": " Endgrain"
+      },
+      {
+        "content": " Iroko is very durable, and is resistant to both rot and insect attack; it’s sometimes used as a substitute for Teak. ",
+        "heading": " Rot Resistance"
+      },
+      {
+        "content": " Generally easy to work, with the exception of its interlocked grain, which may cause some tearout during surfacing operations. Also, deposits of calcium carbonate are sometimes present, which can have a significant dulling effect on cutters. Iroko glues and finishes well. ",
+        "heading": " Workability"
+      },
+      {
+        "content": " No characteristic odor. ",
+        "heading": " Odor"
+      },
+      {
+        "content": " Although severe reactions are quite uncommon, Iroko has been reported as a sensitizer. Usually most common reactions simply include eye, skin, and respiratory irritation. Iroko can  also cause other health effects in sensitive individuals, such as asthma-like symptoms, boils, and hypersensitivity pneumonitis. See the articles Wood Allergies and Toxicity and Wood Dust Safety for more information. ",
+        "heading": " Allergies/Toxicity"
+      },
+      {
+        "content": " Iroko is imported and available for a moderate price. Veneer can also be seen for sale, and is likewise affordably priced. ",
+        "heading": " Pricing/Availability"
+      },
+      {
+        "content": " This wood species is not listed in the CITES Appendices, but is on the IUCN Red List. It is listed as vulnerable due to a population reduction of over 20% in the past three generations, caused by a decline in its natural range, and exploitation. ",
+        "heading": " Sustainability"
+      },
+      {
+        "content": " Veneer, flooring, furniture, cabinetry, boatbuilding, turned items, and other small specialty wood items. ",
+        "heading": " Common Uses"
+      },
+      {
+        "content": " Given the high prices of genuine Teak, Iroko could be considered a low-cost alternative. The wood is stable, durable, and has an overall look that somewhat resembles Teak. ",
+        "heading": " Comments"
+      },
+      {
+        "content": " None available. Related Articles:  Restricted and Endangered Wood Species  ",
+        "heading": " Related Species"
+      }
+    ],
+    "extension": "png",
+    "descriptor": "--d_a_diffuse",
+    "material": "wood",
+    "label": "iroko",
+    "image_id": "00628",
+    "source": "/Users/alexbraun/Documents/projects/texture_classifier/web/static/database/images/wood.00628.iroko.arroway-textures.--d_a_diffuse.png"
+  }
+]

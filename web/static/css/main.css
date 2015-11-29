@@ -24,6 +24,55 @@
 
 /**********TIMBR CONFIGURATIONS**********/
 
+.desc-title {
+	color: #7EC4CF;
+}
+
+.legend-rgb {
+	text-align: center;
+	word-spacing: 20px;
+}
+
+.legend-hsv {
+	text-align: center;
+	word-spacing: 20px;
+}
+
+.legend-red {
+	color: #F77465;
+}
+
+.legend-green {
+	color: #A3C987;	
+}
+
+.legend-blue {
+	color: #5F95DE;
+}
+
+.legend-hue {
+	color: #7EC4CF;
+}
+
+.legend-saturation {
+	color: #AC92DE;
+}
+
+.legend-value {
+	color: #D1B58C;
+}
+
+
+#rgb-hist {
+	max-height: 350px;
+	max-width: 500;
+}
+
+#hsv-hist {
+	max-height: 350;
+	max-width: 500px;
+}
+
 #upload-file {
 	visibility: hidden;
 	width: 0px;
@@ -37,7 +86,7 @@
 }
 
 .container {
-	max-width: 1800px;
+	max-width: 1600px;
 }
 
 /*.col-sm-3.col-lg-3 {
@@ -61,13 +110,14 @@
 
 #thumbnail-title {
 	font-size: 50px !important;
+	color: #FFFFFF;
 	/*font-weight: bold;*/
 	/*white-space: nowrap;*/
 }
 
 #thumbnail-confidence {
 	font-size: 30px !important;
-	color: #616161;
+	color: #7EC4CF;
 	font-weight: bold;
 }
 
@@ -78,7 +128,7 @@
 
 /**********BASE CONFIGURATIONS**********/   
 body {
-	background:#1f1f1f;
+	background: #1f1f1f;
 	font-family: 'Open Sans', sans-serif;
 }
 
@@ -140,7 +190,8 @@ h5 {
 	border: 0;
 	border-top: 1px solid #151515;
 	border-top-style: dashed;
-	margin-top:3px;
+	margin-top:1px;
+	margin-bottom: 0px;
 }
 
 .dash-unit h1 {
@@ -188,9 +239,9 @@ h5 {
 	font-weight: 200;
 	line-height: 16px;
 	color: inherit;
-	margin: 0 0 10px;
-	padding:5px;
-	white-space: nowrap;
+	margin: 0 0 1px;
+	padding: 1px;
+/*	white-space: nowrap;*/
  }
 
 .dash-unit h4 {

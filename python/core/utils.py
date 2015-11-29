@@ -62,10 +62,10 @@ def create_histogram_stats(data, chan_data, channel):
     data[channel + '_' + 'kurt']   = chan_data.apply(lambda x: scipy.stats.kurtosis(x) )
 # ------------------------------------------------------------------------------
 
-def get_histograms(image, bins=256, normalize=False, color_space='rgb'):
-    return {chan: get_channel_histogram(image, chan, bins=bins, normalize=normalize) for chan in color_space}
+def get_histograms(image, bins=256, normalize=False, colorspace='rgb'):
+    return {chan: get_channel_histogram(image, chan, bins=bins, normalize=normalize) for chan in colorspace}
 
-def generate_histograms(item, params, color_space='rgb'):
+def generate_histograms(item, params, colorspace='rgb'):
     img = opencv_to_pil(item)
     output = []
     for p in ImageScanner(img, **params).random_scan(params['patches']):
