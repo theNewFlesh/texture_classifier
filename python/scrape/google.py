@@ -34,7 +34,7 @@ class GoogleImageScraper(object):
 		'''
 		google image search response
 
-		Returns
+		Returns:
 			dict: response
 		'''
 		return self._response

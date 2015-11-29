@@ -145,7 +145,7 @@ def index():
 		# generate histograms
 		temp = os.path.join(__ROOT, 'static/database/temp')
 		if os.path.exists(temp):
-			os.removedirs(temp)
+			shutil.rmtree(temp)
 		os.mkdir(temp)
 
 		save_histogram(fullpath, os.path.join(__ROOT, 'static/database/temp/rgb_hist.png'))

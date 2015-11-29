@@ -6,6 +6,7 @@ from __future__ import division, with_statement, print_function
 from itertools import *
 import os
 import re
+import shutil
 from copy import copy
 import multiprocessing
 import numpy as np
@@ -251,7 +252,7 @@ def get_data(info, hdf_path=None, multiprocess=True, processes=24,
 
 	batch_path = os.path.join('/var/tmp', 'hdf_batch')
 	if os.path.exists(batch_path):
-		os.remove(batch_path)
+		shutil.rmtree(batch_path, ignore_errors=True)
 	os.mkdir(batch_path)
 
 	n = info.shape[0]
