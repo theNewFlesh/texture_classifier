@@ -1,4 +1,4 @@
-python package
+package
 ==============
 
 Subpackages
@@ -6,33 +6,24 @@ Subpackages
 
 .. toctree::
 
-    python.core
-    python.scrape
+    core
+    scrape
 
 Submodules
 ----------
 
-python.app module
+app module
 -----------------
 
-.. automodule:: python.app
+.. automodule:: app
     :members:
     :undoc-members:
     :show-inheritance:
 
-python.model module
+model module
 -------------------
 
-.. automodule:: python.model
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: python
+.. automodule:: model
     :members:
     :undoc-members:
     :show-inheritance:

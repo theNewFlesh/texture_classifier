@@ -59,7 +59,7 @@ class TextureClassifier(object):
 		sets TextureClassifier's internal model to given .pkl model
 
 		Returns:
-			None
+			None: None
 		'''
 		fullpath = os.path.join(self._model_path, filename)
 		with open(fullpath, 'r') as model:
@@ -71,7 +71,7 @@ class TextureClassifier(object):
 		compiled information about data in db_path/images and db_path/descriptions.json
 
 		Returns:
-			info object: DataFrame
+			DataFrame: info object
 		'''
 		desc = None
 		with open(self._desc_path, 'r') as d:
@@ -91,7 +91,7 @@ class TextureClassifier(object):
 				fullpath to image file
 
 		Returns:
-			data: DataFrame 
+			DataFrame: data
 		'''
 		info = get_info(fullpath)
 		info['label'] = 'unknown'
@@ -109,7 +109,7 @@ class TextureClassifier(object):
 				output of self._model.predict(data)
 
 		Returns:
-			results: list (of dicts)
+			list (of dicts): results
 		'''
 		data = pred.merge(self.info, how='inner', on='label')
 		data.drop_duplicates('label', inplace=True)
@@ -125,7 +125,7 @@ class TextureClassifier(object):
 				fullpath to image file
 
 		Returns:
-			results: list (of dicts)
+			list (of dicts): results
 		'''
 		pred = self.get_data(filepath)
 		pred = self._model.predict(pred)
@@ -142,7 +142,7 @@ class TextureClassifier(object):
 				info object which lists images to be processed
 
 		Returns:
-			classification report: DataFrame
+			DataFrame: classification report
 		'''
 		data = []
 		for i, row in info.iterrows():

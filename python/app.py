@@ -51,58 +51,58 @@ def save_histogram(source, destination, colorspace='rgb'):
 			fullpath of destination image
 
 		colorspace opt(str):
-			colorspace of hisogram
+			colorspace of histogram
 			acceptable values: 'rgb', 'hsv'
 			default: 'rgb'
-
+	
 	Returns:
-		None
+		None: None
 	'''
-    img = cv2.imread(source)
-    if colorspace == 'hsv':
-    	img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    hist = get_histograms(img, colorspace=colorspace)
+	img = cv2.imread(source)
+	if colorspace == 'hsv':
+		img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+	hist = get_histograms(img, colorspace=colorspace)
 
-    fig, ax = plt.subplots(figsize=(5.0, 3.5))
+	fig, ax = plt.subplots(figsize=(5.0, 3.5))
 
-    for chan, data in hist.iteritems():
-        label_lut = {
-            'r': 'red',
-            'g': 'green',
-            'b': 'blue',
-            'h': 'hue',
-            's': 'saturation',
-            'v': 'value'
-        }
+	for chan, data in hist.iteritems():
+		label_lut = {
+			'r': 'red',
+			'g': 'green',
+			'b': 'blue',
+			'h': 'hue',
+			's': 'saturation',
+			'v': 'value'
+		}
 
-        color_lut = {
-            'r': '#F77465',
-            'g': '#A3C987',
-            'b': '#5F95DE',
-            'h': '#7EC4CF',
-            's': '#AC92DE',
-            'v': '#D1B58C'
-        }
-        ax.plot(data, label=label_lut[chan], color=color_lut[chan])
-        # ax.legend()
-        ax.set_frame_on(False)
-        ax.set_xlim(0, 255)
-        ax.get_yaxis().set_visible(False)
-        ax.get_xaxis().set_visible(False)
+		color_lut = {
+			'r': '#F77465',
+			'g': '#A3C987',
+			'b': '#5F95DE',
+			'h': '#7EC4CF',
+			's': '#AC92DE',
+			'v': '#D1B58C'
+		}
+		ax.plot(data, label=label_lut[chan], color=color_lut[chan])
+		# ax.legend()
+		ax.set_frame_on(False)
+		ax.set_xlim(0, 255)
+		ax.get_yaxis().set_visible(False)
+		ax.get_xaxis().set_visible(False)
 
-    fig.tight_layout()
-    fig.savefig(destination, transparent=True)
+	fig.tight_layout()
+	fig.savefig(destination, transparent=True)
 
 def predict(fullpath=None):
 	'''
-	predicts teh material type of provided image
+	predicts the material type of provided image
 
 	Args:
 		fullpath (str):
 			fullpath of image file
 
 	Returns:
-		dict of results: dict
+		dict: dict of results
 	'''
 	results = []
 	if fullpath == None:

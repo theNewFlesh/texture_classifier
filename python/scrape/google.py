@@ -35,7 +35,7 @@ class GoogleImageScraper(object):
 		google image search response
 
 		Returns
-			response: dict
+			dict: response
 		'''
 		return self._response
 
@@ -44,7 +44,7 @@ class GoogleImageScraper(object):
 		issue google image query
 		
 		Returns:
-			None
+			None: None
 		'''
 		num = 10
 		params = copy(self._params)

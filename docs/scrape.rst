@@ -1,21 +1,21 @@
-python.scrape package
+scrape package
 =====================
 
 Submodules
 ----------
 
-python.scrape.google module
+scrape.google module
 ---------------------------
 
-.. automodule:: python.scrape.google
+.. automodule:: scrape.google
     :members:
     :undoc-members:
     :show-inheritance:
 
-python.scrape.wood_database module
+scrape.wood_database module
 ----------------------------------
 
-.. automodule:: python.scrape.wood_database
+.. automodule:: scrape.wood_database
     :members:
     :undoc-members:
     :show-inheritance:
