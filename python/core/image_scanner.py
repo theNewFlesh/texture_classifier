@@ -1,4 +1,8 @@
-from __future__ import division
+#! /usr/bin/env python
+'''
+contains the ImageScanner class which is used for scanning images
+'''
+from __future__ import division, with_statement, print_function
 from itertools import *
 import numpy as np
 # ------------------------------------------------------------------------------
@@ -11,19 +15,19 @@ class ImageScanner(object):
         Args:
             image (PIL.Image): Python Imaging Library Image object
             
-            min_resolution (Optional[tuple]):
+            min_resolution opt(tuple):
                 minimum sampling size
                 default: (100, 100)
 
-            max_resolution (Optional[tuple]):
+            max_resolution opt(tuple):
                 maximum sampling size
                 default: (200, 200)
 
-            patch_resolution (Optional[tuple]):
+            patch_resolution opt(tuple):
                 output patch resolution (x, y)
                 default: None
 
-            resample (Optional[str]):
+            resample opt(str):
                 resampling tfilter used by PIL.Image
                 options include:
                     `PIL.Image.NEAREST`  (use nearest neighbour)
@@ -32,7 +36,7 @@ class ImageScanner(object):
                     `PIL.Image.LANCZOS`  (a high-quality downsampling filter)
                 default: 0
 
-            rotation (Optional[int or str]):
+            rotation opt(int or str):
                 degree of rotation to be applied to output patches
                 options include: 0, 90, 180, 270, 'random'
                 default: None
@@ -44,9 +48,7 @@ class ImageScanner(object):
         if patch_resolution:
             self._patch_resolution = patch_resolution
         self._resample = resample
-        self._rotation = rotation
-
-        # convenience attribute
+        self._rotation = rotation        # convenience attribute
         self.__vars = self._image, self._min_resolution, self._max_resolution
     # --------------------------------------------------------------------------
 
@@ -100,11 +102,11 @@ class ImageScanner(object):
         generates a list of patch resolutions
 
         Args:
-            num (Optional[int]):
+            num opt(int):
                 number of resolutions returned
                 default: 10
 
-            spacing (Optional[str]):
+            spacing opt(str):
                 spacing between resolution sizes
                 options include: 'even', 'random'
                 default: 'even'
@@ -122,12 +124,12 @@ class ImageScanner(object):
         scans entire image in a grid-like fashion
 
         Args:
-            resolutions (Optional[int]):
+            resolutions opt(int):
                 number of sampling patch resolutions to return
                 a single grid produces multiple patches (image / sampling resolution)
                 default: 10
 
-            spacing (Optional[str]):
+            spacing opt(str):
                 spacing between resolution sizes
                 options include: 'even', 'random'
                 default: 'even'
@@ -163,7 +165,7 @@ class ImageScanner(object):
         generates patches of random sample size and location from image
 
         Args:
-            patches (Optional[int]):
+            patches opt(int):
                 number of patches returned
                 default: 100
 

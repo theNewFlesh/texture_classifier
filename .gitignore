@@ -62,3 +62,11 @@ target/
 # OS X
 .DS_Store
 *.pdf
+
+*.hdf
+
+*.jpg
+
+*.gif
+
+*.png

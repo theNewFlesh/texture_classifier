@@ -1,8 +1,11 @@
 #! /usr/bin/env python
-
+'''
+a library of core functions which define the image processing/learning pipeline
+'''
+from __future__ import division, with_statement, print_function
+from itertools import *
 import os
 import re
-from itertools import *
 from copy import copy
 import multiprocessing
 import numpy as np
@@ -25,9 +28,16 @@ def get_info(source, spec=['name', 'extension'], sep=None, ignore=['\.DS_Store']
     Args:
         source (str): fullpath to directory of files
 
-        spec (list): naming specification of files (dotslot syntax)
+        spec opt(list): 
+            naming specification of files
+            default: ['name', 'extension']
+        
+        sep opt(str):
+            regular expression with which to seperate filename components
+            recommended value: '\.'
+            default: None (split name from extension)
 
-        ignore (Optional(list)):
+        ignore opt(list):
             list of regex patterns used for ignoring files
             default: ['\.DS_Store']
 
@@ -56,6 +66,19 @@ def get_info(source, spec=['name', 'extension'], sep=None, ignore=['\.DS_Store']
     return DataFrame(data, columns=spec)
 
 def info_split(info, test_size=0.2):
+    '''
+    split info object by rows into train and test objects
+
+    Args:
+        info: (DataFrame):
+            info object to split
+
+        test_size opt(float):
+            percentage of info indices that will be allocated to the test object
+
+    Returns:
+        train, test: DataFrames
+    '''
     def _info_split(info, test_size=0.2):
         train_x, test_x, train_y, test_y = train_test_split(info, info.label, test_size=test_size)
         return DataFrame(train_x, columns=info.columns), DataFrame(test_x, columns=info.columns)
@@ -70,6 +93,20 @@ def info_split(info, test_size=0.2):
 # ------------------------------------------------------------------------------
 
 def process_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']):
+    '''
+    processes images listed in a given info object into usable data
+
+    Args:
+        info (DataFrame):
+            info object containing 'source', 'label' and 'params' columns
+
+        features opt(list):
+            list of features to include in the ouput data
+            default: ['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']
+
+    Returns:
+        DataFrame: processed image data
+    '''
     # create data from info
     data = info.copy()
     data.reset_index(drop=True, inplace=True)
@@ -131,10 +168,6 @@ def process_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_m
     
     del data['bgr']
     del data['params']
-    
-    # expand columns that contain lists
-    # if rgb or hsv:
-    #     data = _flatten(data)
 
     # shuffle data to destroy serial correlations
     index = data.index.tolist()
@@ -151,10 +184,16 @@ def process_data(info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_m
 
 # multiproceesing
 def _multi_get_data(args):
+    '''
+    private function used for multiprocessing
+    '''
     return process_data(args[0], features=args[1])
 
 def _batch_get_data(info, multiprocess=True, processes=24,
     features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']):
+    '''
+    private function used for batch processing
+    '''
     if not multiprocess:
         return process_data(info, features=features)
 
@@ -169,8 +208,34 @@ def _batch_get_data(info, multiprocess=True, processes=24,
     
     return data
 
-def get_data(info, hdf_path, multiprocess=True, processes=24, write=True,
+def get_data(info, hdf_path=None, multiprocess=True, processes=24,
              features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']):
+    '''
+    generates machine-learning-ready data from an info object
+
+    Args:
+        info (DataFrame):
+            info object containing 'source', 'label' and 'params' columns
+
+        hdf_path opt(str):
+            fullpath of the file with which to store generated data
+            default: None
+
+        multiprocess opt(bool):
+            use multiprocessing
+            default: True
+
+        processes opt(int):
+            number of processes to employ for multiprocessing
+            default: 24
+
+        features opt(list):
+            list of features to include in the ouput data
+            default: ['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']
+
+    Returns:
+        DataFrame: machine-learning-ready data
+    '''
     if not multiprocess:
         return process_data(info, features=features)
     
@@ -195,8 +260,7 @@ def get_data(info, hdf_path, multiprocess=True, processes=24, write=True,
     indices = zip(indices, indices[1:])
     
     for i, (start, stop) in enumerate(indices):
-        batch = info.ix[start:stop] #.copy()
-        # batch.reset_index(drop=True, inplace=True)
+        batch = info.ix[start:stop]
         data = _batch_get_data(batch, **kwargs)
         
         filename = 'data.' + str(i).zfill(4) + '.hdf.batch'
@@ -218,7 +282,7 @@ def get_data(info, hdf_path, multiprocess=True, processes=24, write=True,
     data = data.ix[index]
     data.reset_index(drop=True, inplace=True)   
     
-    if write:
+    if hdf_path:
         hdf = HDFStore(hdf_path)
         hdf['data'] = data
         hdf.close()
@@ -227,6 +291,16 @@ def get_data(info, hdf_path, multiprocess=True, processes=24, write=True,
 # ------------------------------------------------------------------------------
 
 def compile_predictions(pred):
+    '''
+    groups predictions made on patches of an image into a set of labels and confidences
+
+    Args:
+        pred (array-like):
+            output from call to [some sklearn model].predict
+
+    Returns:
+        DataFrame: compiled predictions
+    '''
     data = DataFrame()
     data['yhat'] = pred
     data['confidence'] = 1.0
@@ -240,7 +314,39 @@ def compile_predictions(pred):
 def archive_data(train_info, test_info, hdf_path, cross_val=True,
                  multiprocess=True, processes=24,
                  features=['r', 'g', 'b', 'h', 's', 'v', 'fft_max', 'fft_std']):
-    
+    '''
+    convenience function for archive train, validate and test data
+
+    Args:
+        train_info (DataFrame):
+            info object to use for training
+
+        test_info (DataFrame):
+            info object to use for testing
+
+        hdf_path (str):
+            fullpath of file with which to store data
+
+        cross_val opt(bool):
+            use cross validation
+            default: True
+
+        multiprocess opt(bool):
+            use multiprocessing
+            default: True
+
+        processes opt(int):
+            number of processes to employ for multiprocessing
+            default: 24
+
+        features opt(list):
+            list of features to include in the ouput data
+            default: ['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']
+
+    Returns:
+        train_x, valid_x, test_x, train_y, valid_y, test_y: DataFrames
+        train_x, test_x, train_y, test_y if cross_val=False
+    '''
     kwargs = {
         'features': features,
         'write': False,
@@ -253,7 +359,7 @@ def archive_data(train_info, test_info, hdf_path, cross_val=True,
     os.mkdir(hdf_path)
     batch = os.path.join(hdf_path, '.train')
     os.mkdir(batch)
-    train = get_data(train_info, batch, **kwargs)
+    train = get_data(train_info, hdf_path=batch, **kwargs)
     train_x = train.drop('y', axis=1)
     train_y = train.y
     if cross_val:
@@ -268,7 +374,7 @@ def archive_data(train_info, test_info, hdf_path, cross_val=True,
 
     batch = os.path.join(hdf_path, '.test')
     os.mkdir(batch)
-    test = get_data(test_info, batch, **kwargs)
+    test = get_data(test_info, hdf_path=batch, **kwargs)
     test_x = test.drop('y', axis=1)
     test_y = test.y
 
@@ -282,6 +388,17 @@ def archive_data(train_info, test_info, hdf_path, cross_val=True,
     return train_x, test_x, train_y, test_y
 
 def read_archive(hdf_path, items=['train_x', 'valid_x', 'test_x', 'train_y', 'valid_y', 'test_y']):
+    '''
+    convenience function used for retrieving data within a hdf archive
+
+    Args:
+        hdf_path (str):
+            fullpath of file which data is stored in
+
+        items opt(list):
+            items to be retrieved
+            default: ['train_x', 'valid_x', 'test_x', 'train_y', 'valid_y', 'test_y']
+    '''
     hdf = HDFStore(hdf_path)
     output = map(lambda x: hdf[x], items)
     hdf.close()

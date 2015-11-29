@@ -1,6 +1,9 @@
 #! /usr/bin/env python
-
-from __future__ import print_function, with_statement
+'''
+timbr wood classification flask app
+'''
+from __future__ import division, with_statement, print_function
+from itertools import *
 import time
 import sys
 import os
@@ -37,6 +40,24 @@ app.config['upload_dir'] = upload_dir
 # ------------------------------------------------------------------------------
 
 def save_histogram(source, destination, colorspace='rgb'):
+	'''
+	saves rgb or hsv hostograms of source image to destination
+
+	Args:
+		source (str):
+			fullpath of source image
+		
+		destination (str):
+			fullpath of destination image
+
+		colorspace opt(str):
+			colorspace of hisogram
+			acceptable values: 'rgb', 'hsv'
+			default: 'rgb'
+
+	Returns:
+		None
+	'''
     img = cv2.imread(source)
     if colorspace == 'hsv':
     	img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -73,6 +94,16 @@ def save_histogram(source, destination, colorspace='rgb'):
     fig.savefig(destination, transparent=True)
 
 def predict(fullpath=None):
+	'''
+	predicts teh material type of provided image
+
+	Args:
+		fullpath (str):
+			fullpath of image file
+
+	Returns:
+		dict of results: dict
+	'''
 	results = []
 	if fullpath == None:
 		with open('../web/static/demo/demo.json', 'r') as file_:
@@ -97,6 +128,9 @@ def predict(fullpath=None):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+	'''
+	flask index.html endpoint
+	'''
 	if request.method == 'GET':
 		data = predict()
 		return render_template('index.html', **data)

@@ -1,4 +1,9 @@
-from __future__ import print_function, with_statement
+#! /usr/bin/env python
+'''
+contains the TextureClassifier class used for predicting the material type of a supplied texture
+'''
+from __future__ import division, with_statement, print_function
+from itertools import *
 import os
 import time
 import cPickle
@@ -32,6 +37,16 @@ SEP = '\.'
 
 class TextureClassifier(object):
 	def __init__(self, db_path, model_name):
+		'''
+		high level texture classifier
+
+		Args:
+			db_path (str):
+				fullpath to database
+
+			model_name (str):
+				name of .pkl model found in db_path/models
+		'''
 		self._db_path = db_path
 		self._model_path = os.path.join(db_path, 'models')
 		self._image_path = os.path.join(db_path, 'images')
@@ -40,12 +55,24 @@ class TextureClassifier(object):
 		self.set_model(model_name)      
 	
 	def set_model(self, filename):
+		'''
+		sets TextureClassifier's internal model to given .pkl model
+
+		Returns:
+			None
+		'''
 		fullpath = os.path.join(self._model_path, filename)
 		with open(fullpath, 'r') as model:
 			self._model = cPickle.load(model)
 		
 	@property
 	def info(self):
+		'''
+		compiled information about data in db_path/images and db_path/descriptions.json
+
+		Returns:
+			info object: DataFrame
+		'''
 		desc = None
 		with open(self._desc_path, 'r') as d:
 			desc = json.load(d)
@@ -56,6 +83,16 @@ class TextureClassifier(object):
 		return info
 
 	def get_data(self, fullpath):
+		'''
+		processes image file
+
+		Args:
+			fullpath (str):
+				fullpath to image file
+
+		Returns:
+			data: DataFrame 
+		'''
 		info = get_info(fullpath)
 		info['label'] = 'unknown'
 		info['params'] = None
@@ -64,12 +101,32 @@ class TextureClassifier(object):
 		return data
 
 	def get_results(self, pred):
+		'''
+		converts predictions into results
+
+		Args:
+			pred (numpy.array):
+				output of self._model.predict(data)
+
+		Returns:
+			results: list (of dicts)
+		'''
 		data = pred.merge(self.info, how='inner', on='label')
 		data.drop_duplicates('label', inplace=True)
 		data = data.apply(lambda x: x.to_dict(), axis=1).tolist()
 		return data
 
 	def predict(self, filepath):
+		'''
+		predict the material type of provided image file
+
+		Args:
+			fullpath (str):
+				fullpath to image file
+
+		Returns:
+			results: list (of dicts)
+		'''
 		pred = self.get_data(filepath)
 		pred = self._model.predict(pred)
 		pred = compile_predictions(pred)
@@ -77,6 +134,16 @@ class TextureClassifier(object):
 		return pred
 
 	def classification_report(self, info):
+		'''
+		process each image in info and compile a classification report for all of them
+
+		Args:
+			info (DataFrame):
+				info object which lists images to be processed
+
+		Returns:
+			classification report: DataFrame
+		'''
 		data = []
 		for i, row in info.iterrows():
 			filepath = row['source']
