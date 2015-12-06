@@ -25,18 +25,18 @@ app = Flask('timbr',
 	template_folder=os.path.join(__ROOT, 'templates'),
 )
 
-#upload_dir = os.path.join(__ROOT, 'uploads')
-#if os.path.exists(upload_dir):
-#	shutil.rmtree(upload_dir)
-#os.mkdir(upload_dir)
+upload_dir = os.path.join(__ROOT, 'uploads')
+if os.path.exists(upload_dir):
+	shutil.rmtree(upload_dir)
+os.mkdir(upload_dir)
 
-#start = time.time()
-#print('loading model')
-#_MODEL = TextureClassifier(os.path.join(__ROOT, 'static/database'), __MODEL)
-#print('model loaded')
-#print('load time:', time.time() - start)
+start = time.time()
+print('loading model')
+_MODEL = TextureClassifier(os.path.join(__ROOT, 'static/database'), __MODEL)
+print('model loaded')
+print('load time:', time.time() - start)
 
-#app.config['upload_dir'] = upload_dir
+app.config['upload_dir'] = upload_dir
 # ------------------------------------------------------------------------------
 
 def save_histogram(source, destination, colorspace='rgb'):
