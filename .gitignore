@@ -69,6 +69,6 @@ target/
 
 *.gif
 
-#*.png
+*.png
 
 *.pkl
