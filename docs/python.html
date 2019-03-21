@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>package &mdash; texture_classifier 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="texture_classifier 0.1.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> texture_classifier
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">python</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">texture_classifier</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/python.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="package">
+<h1>package<a class="headerlink" href="#package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="core.html">core package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.image_scanner">core.image_scanner module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.pipeline">core.pipeline module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.utils">core.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scrape.html">scrape package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scrape.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrape.html#module-scrape.google">scrape.google module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrape.html#module-scrape.wood_database">scrape.wood_database module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrape.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-app">
+<span id="app-module"></span><h2>app module<a class="headerlink" href="#module-app" title="Permalink to this headline">¶</a></h2>
+<p>timbr wood classification flask app</p>
+<dl class="function">
+<dt id="app.index">
+<code class="descclassname">app.</code><code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>flask index.html endpoint</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.predict">
+<code class="descclassname">app.</code><code class="descname">predict</code><span class="sig-paren">(</span><em>fullpath=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>predicts the material type of provided image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fullpath</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; fullpath of image file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of results</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.save_histogram">
+<code class="descclassname">app.</code><code class="descname">save_histogram</code><span class="sig-paren">(</span><em>source</em>, <em>destination</em>, <em>colorspace='rgb'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#save_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.save_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>saves rgb or hsv hostograms of source image to destination</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; fullpath of source image</li>
+<li><strong>destination</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; fullpath of destination image</li>
+<li><strong>opt</strong> (<em>colorspace</em>) &#8211; colorspace of histogram
+acceptable values: &#8216;rgb&#8217;, &#8216;hsv&#8217;
+default: &#8216;rgb&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)">None</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-model">
+<span id="model-module"></span><h2>model module<a class="headerlink" href="#module-model" title="Permalink to this headline">¶</a></h2>
+<p>contains the TextureClassifier class used for predicting the material type of a supplied texture</p>
+<dl class="class">
+<dt id="model.TextureClassifier">
+<em class="property">class </em><code class="descclassname">model.</code><code class="descname">TextureClassifier</code><span class="sig-paren">(</span><em>db_path</em>, <em>model_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#TextureClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#model.TextureClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="model.TextureClassifier.classification_report">
+<code class="descname">classification_report</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#TextureClassifier.classification_report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#model.TextureClassifier.classification_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>process each image in info and compile a classification report for all of them</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<em>DataFrame</em>) &#8211; info object which lists images to be processed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">classification report</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.TextureClassifier.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><em>fullpath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#TextureClassifier.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#model.TextureClassifier.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>processes image file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fullpath</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; fullpath to image file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.TextureClassifier.get_results">
+<code class="descname">get_results</code><span class="sig-paren">(</span><em>pred</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#TextureClassifier.get_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#model.TextureClassifier.get_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>converts predictions into results</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pred</strong> (<em>numpy.array</em>) &#8211; output of self._model.predict(data)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>list</strong> &#8211; results</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">of dicts</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="model.TextureClassifier.info">
+<code class="descname">info</code><a class="headerlink" href="#model.TextureClassifier.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>compiled information about data in db_path/images and db_path/descriptions.json</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">info object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.TextureClassifier.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#TextureClassifier.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#model.TextureClassifier.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>predict the material type of provided image file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fullpath</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; fullpath to image file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>list</strong> &#8211; results</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">of dicts</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.TextureClassifier.set_model">
+<code class="descname">set_model</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#TextureClassifier.set_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#model.TextureClassifier.set_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets TextureClassifier&#8217;s internal model to given .pkl model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)">None</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Alex Braun.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

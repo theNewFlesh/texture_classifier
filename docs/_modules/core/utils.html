@@ -1,0 +1,469 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>core.utils &mdash; texture_classifier 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="texture_classifier 0.1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> texture_classifier
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">python</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">texture_classifier</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>core.utils</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for core.utils</h1><div class="highlight"><pre>
+<span class="c">#! /usr/bin/env python</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">A utilities library for various io/data aggregation tasks</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">Series</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<span class="kn">from</span> <span class="nn">core.image_scanner</span> <span class="kn">import</span> <span class="n">ImageScanner</span>
+<span class="kn">import</span> <span class="nn">PIL</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="c"># from IPython import display</span>
+<span class="c"># ------------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="get_report"><a class="viewcode-back" href="../../core.html#core.utils.get_report">[docs]</a><span class="k">def</span> <span class="nf">get_report</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	returns a classification report as a DataFrame, rather than as text</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		y_true (array-like):</span>
+<span class="sd">			list of true labels</span>
+
+<span class="sd">		y_pred (array-like):</span>
+<span class="sd">			list of predicted labels</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		classification report: DataFrame</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;avg / total&#39;</span><span class="p">,</span> <span class="s">&#39;total&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; +&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">))</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">!=</span> <span class="p">[],</span> <span class="n">x</span><span class="p">)</span>
+	<span class="n">report</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+	<span class="n">report</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+	<span class="n">report</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="k">return</span> <span class="n">report</span></div>
+<span class="c"># ------------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="pil_to_opencv"><a class="viewcode-back" href="../../core.html#core.utils.pil_to_opencv">[docs]</a><span class="k">def</span> <span class="nf">pil_to_opencv</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	converts PIL.Image into cv2 image</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		image (PIL.Image):</span>
+<span class="sd">			pillow image</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		cv2: opencv image</span>
+<span class="sd">		object is in BGR color space</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2BGR</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="opencv_to_pil"><a class="viewcode-back" href="../../core.html#core.utils.opencv_to_pil">[docs]</a><span class="k">def</span> <span class="nf">opencv_to_pil</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	converts cv2 image into PIL.Image</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		image (cv2 image):</span>
+<span class="sd">			cv2 image</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		PIL.Image: pillow image</span>
+<span class="sd">		object is in BGR color space</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">return</span> <span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="generate_samples"><a class="viewcode-back" href="../../core.html#core.utils.generate_samples">[docs]</a><span class="k">def</span> <span class="nf">generate_samples</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	convenience function for  generating samples from a provided image along with its label and parameters</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		image (PIL.Image):</span>
+<span class="sd">			pillow image</span>
+
+<span class="sd">		label (str):</span>
+<span class="sd">			image label</span>
+
+<span class="sd">		params (dict):</span>
+<span class="sd">			params to provide to ImageScanner</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		list: matrix of patches</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="n">scan</span> <span class="o">=</span> <span class="n">ImageScanner</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+	<span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">scan</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s">&#39;scan_method&#39;</span><span class="p">])</span>
+	<span class="k">return</span> <span class="p">[[</span><span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">params</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="get_channel_histogram"><a class="viewcode-back" href="../../core.html#core.utils.get_channel_histogram">[docs]</a><span class="k">def</span> <span class="nf">get_channel_histogram</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	generates frequency data for a given channel of a provided image</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		image (cv2 image):</span>
+<span class="sd">			opencv image to be processed</span>
+
+<span class="sd">		channel (str):</span>
+<span class="sd">			color channel to be processed</span>
+<span class="sd">			acceptable values: r, g, b, h, s, v</span>
+
+<span class="sd">		bins opt(int):</span>
+<span class="sd">			number of bins to split histogram into</span>
+<span class="sd">			default: 256 (number of channel values for sRGB images)</span>
+
+<span class="sd">		normalize opt(bool):</span>
+<span class="sd">			normalize histogram data</span>
+<span class="sd">			default: False</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		numpy.array: raveled array</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="n">lut</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s">&#39;r&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&#39;g&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+		<span class="s">&#39;h&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">:</span> <span class="mi">2</span>
+	<span class="p">}</span>
+	<span class="n">output</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">image</span><span class="p">],[</span><span class="n">lut</span><span class="p">[</span><span class="n">channel</span><span class="p">]],</span> <span class="bp">None</span><span class="p">,</span> <span class="p">[</span><span class="n">bins</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">])</span>
+	<span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+		<span class="n">output</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="create_histogram_stats"><a class="viewcode-back" href="../../core.html#core.utils.create_histogram_stats">[docs]</a><span class="k">def</span> <span class="nf">create_histogram_stats</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">chan_data</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	convenience function for appending statics based upon provided histogram data to data</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		data (DataFrame): data to be appended to </span>
+
+<span class="sd">		chan_data (DataFrame): channel histogram data</span>
+
+<span class="sd">		channel (str): name of channel</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		None: None</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="n">data</span><span class="p">[</span><span class="n">channel</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span> <span class="o">+</span> <span class="s">&#39;mean&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">chan_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="p">)</span>
+	<span class="n">data</span><span class="p">[</span><span class="n">channel</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span> <span class="o">+</span> <span class="s">&#39;max&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">chan_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="p">)</span>
+	<span class="n">data</span><span class="p">[</span><span class="n">channel</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span> <span class="o">+</span> <span class="s">&#39;argmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chan_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">)</span>
+	<span class="n">data</span><span class="p">[</span><span class="n">channel</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span> <span class="o">+</span> <span class="s">&#39;std&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">chan_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="p">)</span>
+	<span class="n">data</span><span class="p">[</span><span class="n">channel</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span> <span class="o">+</span> <span class="s">&#39;skew&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">chan_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">skew</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">)</span>
+	<span class="n">data</span><span class="p">[</span><span class="n">channel</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span> <span class="o">+</span> <span class="s">&#39;kurt&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">chan_data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">kurtosis</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">)</span></div>
+<span class="c"># ------------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="get_histograms"><a class="viewcode-back" href="../../core.html#core.utils.get_histograms">[docs]</a><span class="k">def</span> <span class="nf">get_histograms</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">colorspace</span><span class="o">=</span><span class="s">&#39;rgb&#39;</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	generates histogram data for each channel of an image</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		image (cv2 image):</span>
+<span class="sd">			opencv image to be processed</span>
+
+<span class="sd">		bins opt(int):</span>
+<span class="sd">			number of bins to split histogram into</span>
+<span class="sd">			default: 256 (number of channel values for sRGB images)</span>
+
+<span class="sd">		normalize opt(bool):</span>
+<span class="sd">			normalize histogram data</span>
+<span class="sd">			default: False</span>
+
+<span class="sd">		colorspace opt(str):</span>
+<span class="sd">			colorspace of provided image</span>
+<span class="sd">			acceptable values: &#39;rgb&#39;, &#39;hsv&#39;</span>
+<span class="sd">			default: &#39;rgb&#39;</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		dict: dict of channel histograms</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">return</span> <span class="p">{</span><span class="n">chan</span><span class="p">:</span> <span class="n">get_channel_histogram</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">chan</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">)</span> <span class="k">for</span> <span class="n">chan</span> <span class="ow">in</span> <span class="n">colorspace</span><span class="p">}</span></div>
+<span class="c"># ------------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="plot_channel_histogram"><a class="viewcode-back" href="../../core.html#core.utils.plot_channel_histogram">[docs]</a><span class="k">def</span> <span class="nf">plot_channel_histogram</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	plots a histogram of channel of a provided image</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		image (cv2 image):</span>
+<span class="sd">			opencv image to be processed</span>
+
+<span class="sd">		channel (str): color channel</span>
+
+<span class="sd">		bins opt(int):</span>
+<span class="sd">			number of bins to split histogram into</span>
+<span class="sd">			default: 256 (number of channel values for sRGB images)</span>
+
+<span class="sd">		normalize opt(bool):</span>
+<span class="sd">			normalize histogram data</span>
+<span class="sd">			default: False</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		None: None</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="n">lut</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s">&#39;r&#39;</span><span class="p">:</span> <span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="s">&#39;g&#39;</span><span class="p">:</span> <span class="s">&#39;g&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="s">&#39;b&#39;</span><span class="p">,</span>
+		<span class="s">&#39;h&#39;</span><span class="p">:</span> <span class="s">&#39;w&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">:</span> <span class="s">&#39;w&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">:</span> <span class="s">&#39;w&#39;</span>
+		  <span class="p">}</span>
+	<span class="n">hist</span> <span class="o">=</span> <span class="n">get_channel_histogram</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">)</span>
+	<span class="n">Series</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">lut</span><span class="p">[</span><span class="n">channel</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="plot_histograms"><a class="viewcode-back" href="../../core.html#core.utils.plot_histograms">[docs]</a><span class="k">def</span> <span class="nf">plot_histograms</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	plots a histogram of all channels of a provided image</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		image (cv2 image):</span>
+<span class="sd">			opencv image to be processed</span>
+
+<span class="sd">		bins opt(int):</span>
+<span class="sd">			number of bins to split histogram into</span>
+<span class="sd">			default: 256 (number of channel values for sRGB images)</span>
+
+<span class="sd">		normalize opt(bool):</span>
+<span class="sd">			normalize histogram data</span>
+<span class="sd">			default: False</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		None: None</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">for</span> <span class="n">hist</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">get_histograms</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">)</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+		<span class="n">Series</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span></div>
+<span class="c"># ------------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="execute_python_subshells"><a class="viewcode-back" href="../../core.html#core.utils.execute_python_subshells">[docs]</a><span class="k">def</span> <span class="nf">execute_python_subshells</span><span class="p">(</span><span class="n">script</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	a simple hacky workaroud for multiprocessing&#39;s buginess</span>
+<span class="sd">	executes a new python subshell per item</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		script (str): fullpath of python script to run (check /bin)</span>
+<span class="sd">		iterable (iter): list of argument to provide each call</span>
+<span class="sd">	</span>
+<span class="sd">	Returns:</span>
+<span class="sd">		None: None</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+		<span class="n">cmd</span> <span class="o">=</span> <span class="n">script</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="s">&#39;2&gt;/dev/null &amp;&#39;</span>
+		<span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+		<span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span></div>
+<span class="c"># ------------------------------------------------------------------------------</span>
+
+<span class="c"># def show_image(response):</span>
+<span class="c">#     if not re.search(&#39;endgrain|database&#39;, response[&#39;snippet&#39;], flags=re.IGNORECASE):</span>
+<span class="c">#         print(response[&#39;snippet&#39;], response[&#39;displayLink&#39;])</span>
+<span class="c">#         img = display.Image(url=r[&#39;link&#39;], width=300, height=300)</span>
+<span class="c">#         display.display(img)</span>
+		
+<span class="c"># def display_results(response):</span>
+<span class="c">#     for item in response:</span>
+<span class="c">#         print(item[&#39;snippet&#39;], item[&#39;displayLink&#39;])</span>
+<span class="c">#         img = display.Image(url=item[&#39;link&#39;], width=300, height=300)</span>
+<span class="c">#         display.display(img)</span>
+<span class="c"># ------------------------------------------------------------------------------</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+	<span class="s">&#39;get_report&#39;</span><span class="p">,</span>
+	<span class="s">&#39;pil_to_opencv&#39;</span><span class="p">,</span>
+	<span class="s">&#39;opencv_to_pil&#39;</span><span class="p">,</span>
+	<span class="s">&#39;generate_samples&#39;</span><span class="p">,</span>
+	<span class="s">&#39;get_channel_histogram&#39;</span><span class="p">,</span>
+	<span class="s">&#39;create_histogram_stats&#39;</span><span class="p">,</span>
+	<span class="s">&#39;get_histograms&#39;</span><span class="p">,</span>
+	<span class="s">&#39;plot_channel_histogram&#39;</span><span class="p">,</span>
+	<span class="s">&#39;plot_histograms&#39;</span><span class="p">,</span>
+	<span class="s">&#39;execute_python_subshells&#39;</span>
+	<span class="c"># &#39;show_image&#39;,</span>
+	<span class="c"># &#39;display_results&#39;</span>
+<span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+	<span class="k">pass</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+	<span class="n">help</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Alex Braun.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

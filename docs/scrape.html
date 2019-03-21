@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>scrape package &mdash; texture_classifier 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="texture_classifier 0.1.0 documentation" href="index.html"/>
+        <link rel="up" title="python" href="modules.html"/>
+        <link rel="prev" title="core package" href="core.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> texture_classifier
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="app.html">app package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">model package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">scrape package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrape.google">scrape.google module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrape.wood_database">scrape.wood_database module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">texture_classifier</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="modules.html">python</a> &raquo;</li>
+      
+    <li>scrape package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/scrape.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scrape-package">
+<h1>scrape package<a class="headerlink" href="#scrape-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-scrape.google">
+<span id="scrape-google-module"></span><h2>scrape.google module<a class="headerlink" href="#module-scrape.google" title="Permalink to this headline">¶</a></h2>
+<p>contains the GoogleImageScraper class used for scraping google images</p>
+<dl class="class">
+<dt id="scrape.google.GoogleImageScraper">
+<em class="property">class </em><code class="descclassname">scrape.google.</code><code class="descname">GoogleImageScraper</code><span class="sig-paren">(</span><em>key</em>, <em>cx</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scrape/google.html#GoogleImageScraper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scrape.google.GoogleImageScraper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>scrapes google images</p>
+<dl class="method">
+<dt id="scrape.google.GoogleImageScraper.issue_query">
+<code class="descname">issue_query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scrape/google.html#GoogleImageScraper.issue_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scrape.google.GoogleImageScraper.issue_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>issue google image query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)">None</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrape.google.GoogleImageScraper.response">
+<code class="descname">response</code><a class="headerlink" href="#scrape.google.GoogleImageScraper.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>google image search response</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">response</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrape.wood_database">
+<span id="scrape-wood-database-module"></span><h2>scrape.wood_database module<a class="headerlink" href="#module-scrape.wood_database" title="Permalink to this headline">¶</a></h2>
+<p>contains the WoodDatabaseScraper class used for scraping wood-database.com</p>
+<dl class="class">
+<dt id="scrape.wood_database.WoodDatabaseScraper">
+<em class="property">class </em><code class="descclassname">scrape.wood_database.</code><code class="descname">WoodDatabaseScraper</code><a class="reference internal" href="_modules/scrape/wood_database.html#WoodDatabaseScraper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scrape.wood_database.WoodDatabaseScraper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="scrape.wood_database.WoodDatabaseScraper.get_descriptions">
+<code class="descname">get_descriptions</code><span class="sig-paren">(</span><em>urls</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scrape/wood_database.html#WoodDatabaseScraper.get_descriptions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scrape.wood_database.WoodDatabaseScraper.get_descriptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets description data for each wood type</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>urls</strong> (<em>iterable</em>) &#8211; links generated by get_wood_urls</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of lists</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrape.wood_database.WoodDatabaseScraper.get_image_links">
+<code class="descname">get_image_links</code><span class="sig-paren">(</span><em>urls</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scrape/wood_database.html#WoodDatabaseScraper.get_image_links"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scrape.wood_database.WoodDatabaseScraper.get_image_links" title="Permalink to this definition">¶</a></dt>
+<dd><p>lists all wood texture urls for wood-database.com</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>urls</strong> (<em>iterable</em>) &#8211; links generated by get_wood_urls</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">urls</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)">list</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrape.wood_database.WoodDatabaseScraper.get_wood_urls">
+<code class="descname">get_wood_urls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scrape/wood_database.html#WoodDatabaseScraper.get_wood_urls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scrape.wood_database.WoodDatabaseScraper.get_wood_urls" title="Permalink to this definition">¶</a></dt>
+<dd><p>yields links of each different wood page</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><em>str</em> &#8211; url</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrape.wood_database.WoodDatabaseScraper.scrape_images">
+<code class="descname">scrape_images</code><span class="sig-paren">(</span><em>root</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scrape/wood_database.html#WoodDatabaseScraper.scrape_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scrape.wood_database.WoodDatabaseScraper.scrape_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>scrapes and saves all texture images from wood-database.com</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>root</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; directory to save images in</li>
+<li><strong>opt</strong> (<em>prefix</em>) &#8211; filename prefix
+default: None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrape.wood_database.WoodDatabaseScraper.write_images">
+<code class="descname">write_images</code><span class="sig-paren">(</span><em>root</em>, <em>links</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scrape/wood_database.html#WoodDatabaseScraper.write_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scrape.wood_database.WoodDatabaseScraper.write_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>writes all images to a given root directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>root</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; root directory</li>
+<li><strong>links</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of image links provided by get_image_links</li>
+<li><strong>opt</strong> (<em>prefix</em>) &#8211; filename prefix
+default: None</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)">None</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="core.html" class="btn btn-neutral" title="core package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Alex Braun.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,742 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>core package &mdash; texture_classifier 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="texture_classifier 0.1.0 documentation" href="index.html"/>
+        <link rel="up" title="python" href="modules.html"/>
+        <link rel="next" title="scrape package" href="scrape.html"/>
+        <link rel="prev" title="model package" href="model.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> texture_classifier
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="app.html">app package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">model package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">core package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-core.image_scanner">core.image_scanner module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-core.pipeline">core.pipeline module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-core.utils">core.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scrape.html">scrape package</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">texture_classifier</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="modules.html">python</a> &raquo;</li>
+      
+    <li>core package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/core.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="core-package">
+<h1>core package<a class="headerlink" href="#core-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-core.image_scanner">
+<span id="core-image-scanner-module"></span><h2>core.image_scanner module<a class="headerlink" href="#module-core.image_scanner" title="Permalink to this headline">¶</a></h2>
+<p>contains the ImageScanner class which is used for scanning images</p>
+<dl class="class">
+<dt id="core.image_scanner.ImageScanner">
+<em class="property">class </em><code class="descclassname">core.image_scanner.</code><code class="descname">ImageScanner</code><span class="sig-paren">(</span><em>image</em>, <em>min_resolution=(100</em>, <em>100)</em>, <em>max_resolution=(200</em>, <em>200)</em>, <em>patch_resolution=None</em>, <em>resample=0</em>, <em>rotation=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/image_scanner.html#ImageScanner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.image_scanner.ImageScanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Used for scanning images and producting image pathches through various techniques</p>
+<dl class="method">
+<dt id="core.image_scanner.ImageScanner.get_resolutions">
+<code class="descname">get_resolutions</code><span class="sig-paren">(</span><em>num=10</em>, <em>spacing='even'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/image_scanner.html#ImageScanner.get_resolutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.image_scanner.ImageScanner.get_resolutions" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates a list of patch resolutions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>opt</strong> (<em>spacing</em>) &#8211; number of resolutions returned
+default: 10</li>
+<li><strong>opt</strong> &#8211; spacing between resolution sizes
+options include: &#8216;even&#8217;, &#8216;random&#8217;
+default: &#8216;even&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first last"><em>tuple</em> &#8211; (x, y) resolution</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.image_scanner.ImageScanner.grid_scan">
+<code class="descname">grid_scan</code><span class="sig-paren">(</span><em>resolutions=10</em>, <em>spacing='even'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/image_scanner.html#ImageScanner.grid_scan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.image_scanner.ImageScanner.grid_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>scans entire image in a grid-like fashion</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>opt</strong> (<em>spacing</em>) &#8211; number of sampling patch resolutions to return
+a single grid produces multiple patches (image / sampling resolution)
+default: 10</li>
+<li><strong>opt</strong> &#8211; spacing between resolution sizes
+options include: &#8216;even&#8217;, &#8216;random&#8217;
+default: &#8216;even&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><p class="first last"><em>PIL.Image</em> &#8211; cropped (resized and/or rotated) patch</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.image_scanner.ImageScanner.random_scan">
+<code class="descname">random_scan</code><span class="sig-paren">(</span><em>patches=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/image_scanner.html#ImageScanner.random_scan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.image_scanner.ImageScanner.random_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates patches of random sample size and location from image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>opt</strong> (<em>patches</em>) &#8211; number of patches returned
+default: 100</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><em>PIL.Image</em> &#8211; cropped (resized and/or rotated) patch</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-core.pipeline">
+<span id="core-pipeline-module"></span><h2>core.pipeline module<a class="headerlink" href="#module-core.pipeline" title="Permalink to this headline">¶</a></h2>
+<p>a library of core functions which define the image processing/learning pipeline</p>
+<dl class="function">
+<dt id="core.pipeline.get_info">
+<code class="descclassname">core.pipeline.</code><code class="descname">get_info</code><span class="sig-paren">(</span><em>source, spec=['name', 'extension'], sep=None, ignore=['\\.DS_Store']</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/pipeline.html#get_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.pipeline.get_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates a descriptive DataFrame based upon files contained with a source directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; fullpath to directory of files</li>
+<li><strong>opt</strong> (<em>ignore</em>) &#8211; naming specification of files
+default: [&#8216;name&#8217;, &#8216;extension&#8217;]</li>
+<li><strong>opt</strong> &#8211; regular expression with which to seperate filename components
+recommended value: &#8216;.&#8217;
+default: None (split name from extension)</li>
+<li><strong>opt</strong> &#8211; list of regex patterns used for ignoring files
+default: [&#8216;.DS_Store&#8217;]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">an info DataFrame</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.pipeline.info_split">
+<code class="descclassname">core.pipeline.</code><code class="descname">info_split</code><span class="sig-paren">(</span><em>info</em>, <em>test_size=0.2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/pipeline.html#info_split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.pipeline.info_split" title="Permalink to this definition">¶</a></dt>
+<dd><p>split info object by rows into train and test objects</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>info</strong> &#8211; (DataFrame):
+info object to split</li>
+<li><strong>opt</strong> (<em>test_size</em>) &#8211; percentage of info indices that will be allocated to the test object</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">train, test</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">2 DataFrames</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.pipeline.process_data">
+<code class="descclassname">core.pipeline.</code><code class="descname">process_data</code><span class="sig-paren">(</span><em>info, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/pipeline.html#process_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.pipeline.process_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>processes images listed in a given info object into usable data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>info</strong> (<em>DataFrame</em>) &#8211; info object containing &#8216;source&#8217;, &#8216;label&#8217; and &#8216;params&#8217; columns</li>
+<li><strong>opt</strong> (<em>features</em>) &#8211; list of features to include in the ouput data
+default: [&#8216;r&#8217;, &#8216;g&#8217;, &#8216;b&#8217;, &#8216;h&#8217;, &#8216;s&#8217;, &#8216;v&#8217;, &#8216;fft_std&#8217;, &#8216;fft_max&#8217;]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">processed image data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.pipeline.get_data">
+<code class="descclassname">core.pipeline.</code><code class="descname">get_data</code><span class="sig-paren">(</span><em>info, hdf_path=None, multiprocess=True, processes=24, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_std', 'fft_max']</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/pipeline.html#get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.pipeline.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates machine-learning-ready data from an info object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>info</strong> (<em>DataFrame</em>) &#8211; info object containing &#8216;source&#8217;, &#8216;label&#8217; and &#8216;params&#8217; columns</li>
+<li><strong>opt</strong> (<em>features</em>) &#8211; fullpath of the file with which to store generated data
+default: None</li>
+<li><strong>opt</strong> &#8211; use multiprocessing
+default: True</li>
+<li><strong>opt</strong> &#8211; number of processes to employ for multiprocessing
+default: 24</li>
+<li><strong>opt</strong> &#8211; list of features to include in the ouput data
+default: [&#8216;r&#8217;, &#8216;g&#8217;, &#8216;b&#8217;, &#8216;h&#8217;, &#8216;s&#8217;, &#8216;v&#8217;, &#8216;fft_std&#8217;, &#8216;fft_max&#8217;]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">machine-learning-ready data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.pipeline.compile_predictions">
+<code class="descclassname">core.pipeline.</code><code class="descname">compile_predictions</code><span class="sig-paren">(</span><em>pred</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/pipeline.html#compile_predictions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.pipeline.compile_predictions" title="Permalink to this definition">¶</a></dt>
+<dd><p>groups predictions made on patches of an image into a set of labels and confidences</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pred</strong> (<em>array-like</em>) &#8211; output from call to [some sklearn model].predict</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">compiled predictions</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.pipeline.archive_data">
+<code class="descclassname">core.pipeline.</code><code class="descname">archive_data</code><span class="sig-paren">(</span><em>train_info, test_info, hdf_path, cross_val=True, multiprocess=True, processes=24, features=['r', 'g', 'b', 'h', 's', 'v', 'fft_max', 'fft_std']</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/pipeline.html#archive_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.pipeline.archive_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>convenience function for archive train, validate and test data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>train_info</strong> (<em>DataFrame</em>) &#8211; info object to use for training</li>
+<li><strong>test_info</strong> (<em>DataFrame</em>) &#8211; info object to use for testing</li>
+<li><strong>hdf_path</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; fullpath of file with which to store data</li>
+<li><strong>opt</strong> (<em>features</em>) &#8211; use cross validation
+default: True</li>
+<li><strong>opt</strong> &#8211; use multiprocessing
+default: True</li>
+<li><strong>opt</strong> &#8211; number of processes to employ for multiprocessing
+default: 24</li>
+<li><strong>opt</strong> &#8211; list of features to include in the ouput data
+default: [&#8216;r&#8217;, &#8216;g&#8217;, &#8216;b&#8217;, &#8216;h&#8217;, &#8216;s&#8217;, &#8216;v&#8217;, &#8216;fft_std&#8217;, &#8216;fft_max&#8217;]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">DataFrames
+train_x, test_x, train_y, test_y if cross_val=False</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">train_x, valid_x, test_x, train_y, valid_y, test_y</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.pipeline.read_archive">
+<code class="descclassname">core.pipeline.</code><code class="descname">read_archive</code><span class="sig-paren">(</span><em>hdf_path, items=['train_x', 'valid_x', 'test_x', 'train_y', 'valid_y', 'test_y']</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/pipeline.html#read_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.pipeline.read_archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>convenience function used for retrieving data within a hdf archive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hdf_path</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; fullpath of file which data is stored in</li>
+<li><strong>opt</strong> (<em>items</em>) &#8211; items to be retrieved
+default: [&#8216;train_x&#8217;, &#8216;valid_x&#8217;, &#8216;test_x&#8217;, &#8216;train_y&#8217;, &#8216;valid_y&#8217;, &#8216;test_y&#8217;]</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-core.utils">
+<span id="core-utils-module"></span><h2>core.utils module<a class="headerlink" href="#module-core.utils" title="Permalink to this headline">¶</a></h2>
+<p>A utilities library for various io/data aggregation tasks</p>
+<dl class="function">
+<dt id="core.utils.get_report">
+<code class="descclassname">core.utils.</code><code class="descname">get_report</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/utils.html#get_report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.utils.get_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a classification report as a DataFrame, rather than as text</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y_true</strong> (<em>array-like</em>) &#8211; list of true labels</li>
+<li><strong>y_pred</strong> (<em>array-like</em>) &#8211; list of predicted labels</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">DataFrame</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">classification report</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.utils.pil_to_opencv">
+<code class="descclassname">core.utils.</code><code class="descname">pil_to_opencv</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/utils.html#pil_to_opencv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.utils.pil_to_opencv" title="Permalink to this definition">¶</a></dt>
+<dd><p>converts PIL.Image into cv2 image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> (<em>PIL.Image</em>) &#8211; pillow image</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">opencv image
+object is in BGR color space</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">cv2</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.utils.opencv_to_pil">
+<code class="descclassname">core.utils.</code><code class="descname">opencv_to_pil</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/utils.html#opencv_to_pil"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.utils.opencv_to_pil" title="Permalink to this definition">¶</a></dt>
+<dd><p>converts cv2 image into PIL.Image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> (<em>cv2 image</em>) &#8211; cv2 image</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">pillow image
+object is in BGR color space</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">PIL.Image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.utils.generate_samples">
+<code class="descclassname">core.utils.</code><code class="descname">generate_samples</code><span class="sig-paren">(</span><em>image</em>, <em>label</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/utils.html#generate_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.utils.generate_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>convenience function for  generating samples from a provided image along with its label and parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> (<em>PIL.Image</em>) &#8211; pillow image</li>
+<li><strong>label</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; image label</li>
+<li><strong>params</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; params to provide to ImageScanner</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">matrix of patches</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)">list</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.utils.get_channel_histogram">
+<code class="descclassname">core.utils.</code><code class="descname">get_channel_histogram</code><span class="sig-paren">(</span><em>image</em>, <em>channel</em>, <em>bins=256</em>, <em>normalize=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/utils.html#get_channel_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.utils.get_channel_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates frequency data for a given channel of a provided image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> (<em>cv2 image</em>) &#8211; opencv image to be processed</li>
+<li><strong>channel</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; color channel to be processed
+acceptable values: r, g, b, h, s, v</li>
+<li><strong>opt</strong> (<em>normalize</em>) &#8211; number of bins to split histogram into
+default: 256 (number of channel values for sRGB images)</li>
+<li><strong>opt</strong> &#8211; normalize histogram data
+default: False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">raveled array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.utils.create_histogram_stats">
+<code class="descclassname">core.utils.</code><code class="descname">create_histogram_stats</code><span class="sig-paren">(</span><em>data</em>, <em>chan_data</em>, <em>channel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/utils.html#create_histogram_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.utils.create_histogram_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>convenience function for appending statics based upon provided histogram data to data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>DataFrame</em>) &#8211; data to be appended to</li>
+<li><strong>chan_data</strong> (<em>DataFrame</em>) &#8211; channel histogram data</li>
+<li><strong>channel</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of channel</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)">None</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.utils.get_histograms">
+<code class="descclassname">core.utils.</code><code class="descname">get_histograms</code><span class="sig-paren">(</span><em>image</em>, <em>bins=256</em>, <em>normalize=False</em>, <em>colorspace='rgb'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/utils.html#get_histograms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.utils.get_histograms" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates histogram data for each channel of an image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> (<em>cv2 image</em>) &#8211; opencv image to be processed</li>
+<li><strong>opt</strong> (<em>colorspace</em>) &#8211; number of bins to split histogram into
+default: 256 (number of channel values for sRGB images)</li>
+<li><strong>opt</strong> &#8211; normalize histogram data
+default: False</li>
+<li><strong>opt</strong> &#8211; colorspace of provided image
+acceptable values: &#8216;rgb&#8217;, &#8216;hsv&#8217;
+default: &#8216;rgb&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of channel histograms</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.utils.plot_channel_histogram">
+<code class="descclassname">core.utils.</code><code class="descname">plot_channel_histogram</code><span class="sig-paren">(</span><em>image</em>, <em>channel</em>, <em>bins=256</em>, <em>normalize=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/utils.html#plot_channel_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.utils.plot_channel_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>plots a histogram of channel of a provided image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> (<em>cv2 image</em>) &#8211; opencv image to be processed</li>
+<li><strong>channel</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; color channel</li>
+<li><strong>opt</strong> (<em>normalize</em>) &#8211; number of bins to split histogram into
+default: 256 (number of channel values for sRGB images)</li>
+<li><strong>opt</strong> &#8211; normalize histogram data
+default: False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)">None</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.utils.plot_histograms">
+<code class="descclassname">core.utils.</code><code class="descname">plot_histograms</code><span class="sig-paren">(</span><em>image</em>, <em>bins=256</em>, <em>normalize=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/utils.html#plot_histograms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.utils.plot_histograms" title="Permalink to this definition">¶</a></dt>
+<dd><p>plots a histogram of all channels of a provided image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image</strong> (<em>cv2 image</em>) &#8211; opencv image to be processed</li>
+<li><strong>opt</strong> (<em>normalize</em>) &#8211; number of bins to split histogram into
+default: 256 (number of channel values for sRGB images)</li>
+<li><strong>opt</strong> &#8211; normalize histogram data
+default: False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)">None</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.utils.execute_python_subshells">
+<code class="descclassname">core.utils.</code><code class="descname">execute_python_subshells</code><span class="sig-paren">(</span><em>script</em>, <em>iterable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/utils.html#execute_python_subshells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.utils.execute_python_subshells" title="Permalink to this definition">¶</a></dt>
+<dd><p>a simple hacky workaroud for multiprocessing&#8217;s buginess
+executes a new python subshell per item</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>script</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; fullpath of python script to run (check /bin)</li>
+<li><strong>iterable</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#iter" title="(in Python v2.7)"><em>iter</em></a>) &#8211; list of argument to provide each call</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)">None</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-core" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="scrape.html" class="btn btn-neutral float-right" title="scrape package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="model.html" class="btn btn-neutral" title="model package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Alex Braun.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

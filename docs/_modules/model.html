@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>model &mdash; texture_classifier 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="texture_classifier 0.1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> texture_classifier
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">python</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">texture_classifier</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for model</h1><div class="highlight"><pre>
+<span class="c">#! /usr/bin/env python</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">contains the TextureClassifier class used for predicting the material type of a supplied texture</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">cPickle</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">core.pipeline</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="c"># ------------------------------------------------------------------------------</span>
+
+<span class="n">PARAMS</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="s">&#39;scan_method&#39;</span><span class="p">:</span>      <span class="s">&#39;grid_scan&#39;</span><span class="p">,</span>
+	<span class="s">&#39;min_resolution&#39;</span><span class="p">:</span>   <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+	<span class="s">&#39;max_resolution&#39;</span><span class="p">:</span>   <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+	<span class="s">&#39;resolutions&#39;</span><span class="p">:</span>      <span class="mi">1</span><span class="p">,</span>
+	<span class="s">&#39;spacing&#39;</span><span class="p">:</span>          <span class="s">&#39;even&#39;</span><span class="p">,</span>
+	<span class="c"># &#39;patch_resolution&#39;: (100, 100),</span>
+	<span class="c"># &#39;normalize&#39;:        True,</span>
+	<span class="s">&#39;bins&#39;</span><span class="p">:</span>             <span class="mi">256</span>
+<span class="p">}</span>
+
+<span class="n">IMAGE_SPEC</span> <span class="o">=</span> <span class="p">[</span>
+	<span class="s">&#39;material&#39;</span><span class="p">,</span>
+	<span class="s">&#39;image_id&#39;</span><span class="p">,</span>
+	<span class="s">&#39;label&#39;</span><span class="p">,</span>
+	<span class="s">&#39;origin&#39;</span><span class="p">,</span>
+	<span class="s">&#39;descriptor&#39;</span><span class="p">,</span>
+	<span class="s">&#39;extension&#39;</span>
+<span class="p">]</span>
+
+<span class="n">SEP</span> <span class="o">=</span> <span class="s">&#39;\.&#39;</span>
+<span class="c"># ------------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="TextureClassifier"><a class="viewcode-back" href="../python.html#model.TextureClassifier">[docs]</a><span class="k">class</span> <span class="nc">TextureClassifier</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_path</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		high level texture classifier</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			db_path (str):</span>
+<span class="sd">				fullpath to database</span>
+
+<span class="sd">			model_name (str):</span>
+<span class="sd">				name of .pkl model found in db_path/models</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_db_path</span> <span class="o">=</span> <span class="n">db_path</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">db_path</span><span class="p">,</span> <span class="s">&#39;models&#39;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_image_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">db_path</span><span class="p">,</span> <span class="s">&#39;images&#39;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_desc_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">db_path</span><span class="p">,</span> <span class="s">&#39;descriptions.json&#39;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_temp_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">db_path</span><span class="p">,</span> <span class="s">&#39;temp&#39;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>      
+	
+<div class="viewcode-block" id="TextureClassifier.set_model"><a class="viewcode-back" href="../python.html#model.TextureClassifier.set_model">[docs]</a>	<span class="k">def</span> <span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		sets TextureClassifier&#39;s internal model to given .pkl model</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			None: None</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">fullpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+		<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fullpath</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></div>
+		
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		compiled information about data in db_path/images and db_path/descriptions.json</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			DataFrame: info object</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">desc</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_desc_path</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+			<span class="n">desc</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+		<span class="n">info</span> <span class="o">=</span> <span class="n">get_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_image_path</span><span class="p">,</span> <span class="n">IMAGE_SPEC</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">SEP</span><span class="p">)</span>
+		<span class="n">info</span><span class="p">[</span><span class="s">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+			<span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">desc</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">if</span> <span class="n">desc</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="k">else</span> <span class="bp">None</span><span class="p">)</span> 
+		<span class="k">return</span> <span class="n">info</span>
+
+<div class="viewcode-block" id="TextureClassifier.get_data"><a class="viewcode-back" href="../python.html#model.TextureClassifier.get_data">[docs]</a>	<span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullpath</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		processes image file</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			fullpath (str):</span>
+<span class="sd">				fullpath to image file</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			DataFrame: data</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">info</span> <span class="o">=</span> <span class="n">get_info</span><span class="p">(</span><span class="n">fullpath</span><span class="p">)</span>
+		<span class="n">info</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;unknown&#39;</span>
+		<span class="n">info</span><span class="p">[</span><span class="s">&#39;params&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="n">info</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">PARAMS</span><span class="p">)</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="n">process_data</span><span class="p">(</span><span class="n">info</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="TextureClassifier.get_results"><a class="viewcode-back" href="../python.html#model.TextureClassifier.get_results">[docs]</a>	<span class="k">def</span> <span class="nf">get_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		converts predictions into results</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			pred (numpy.array):</span>
+<span class="sd">				output of self._model.predict(data)</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			list (of dicts): results</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="n">pred</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;inner&#39;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">&#39;label&#39;</span><span class="p">)</span>
+		<span class="n">data</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s">&#39;label&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+		<span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="TextureClassifier.predict"><a class="viewcode-back" href="../python.html#model.TextureClassifier.predict">[docs]</a>	<span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		predict the material type of provided image file</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			fullpath (str):</span>
+<span class="sd">				fullpath to image file</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			list (of dicts): results</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+		<span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+		<span class="n">pred</span> <span class="o">=</span> <span class="n">compile_predictions</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+		<span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">pred</span></div>
+
+<div class="viewcode-block" id="TextureClassifier.classification_report"><a class="viewcode-back" href="../python.html#model.TextureClassifier.classification_report">[docs]</a>	<span class="k">def</span> <span class="nf">classification_report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		process each image in info and compile a classification report for all of them</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			info (DataFrame):</span>
+<span class="sd">				info object which lists images to be processed</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			DataFrame: classification report</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+			<span class="n">filepath</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">]</span>
+			<span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+			<span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+			<span class="n">pred</span> <span class="o">=</span> <span class="n">compile_predictions</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+			<span class="n">pred</span> <span class="o">=</span> <span class="n">pred</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+			<span class="n">pred</span><span class="p">[</span><span class="s">&#39;origin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;origin&#39;</span><span class="p">]</span>
+			<span class="n">pred</span><span class="p">[</span><span class="s">&#39;ytrue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]</span>
+			<span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+		<span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;confidence&#39;</span><span class="p">,</span> <span class="s">&#39;ypred&#39;</span><span class="p">,</span> <span class="s">&#39;origin&#39;</span><span class="p">,</span> <span class="s">&#39;ytrue&#39;</span><span class="p">]</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s">&#39;origin&#39;</span><span class="p">,</span> <span class="s">&#39;confidence&#39;</span><span class="p">,</span> <span class="s">&#39;ytrue&#39;</span><span class="p">,</span> <span class="s">&#39;ypred&#39;</span><span class="p">]]</span>
+		<span class="k">return</span> <span class="n">data</span></div></div>
+<span class="c"># ------------------------------------------------------------------------------</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+	<span class="s">&#39;PARAMS&#39;</span><span class="p">,</span>
+	<span class="s">&#39;IMAGE_SPEC&#39;</span><span class="p">,</span>
+	<span class="s">&#39;TextureClassifier&#39;</span>
+<span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+	<span class="k">pass</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+	<span class="n">help</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Alex Braun.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
