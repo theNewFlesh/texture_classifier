@@ -9,6 +9,11 @@
              alt="github" width="30px" height="30px"
         >
     </a>
+    <a href="https://pypi.org/user/the-new-flesh" rel="nofollow noreferrer">
+        <img src="https://cdn.iconscout.com/icon/free/png-256/python-2-226051.png"
+             alt="pypi" width="30px" height="30px"
+        >
+    </a>
     <a href="http://vimeo.com/user3965452" rel="nofollow noreferrer">
         <img src="https://cdn1.iconfinder.com/data/icons/somacro___dpi_social_media_icons_by_vervex-dfjq/500/vimeo.png"
              alt="vimeo" width="30px" height="30px"
@@ -20,6 +25,7 @@
         >
     </a>
 </p>
+
 
 # texture_classifier
 A texture classification pipeline wrapped in a Flask web application.  Texture_classifier receives a single input image of a texture (wood so far) and produces a prediction of that type of material (wood species) as well as other relevant information and histogram data.
